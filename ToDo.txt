@@ -1,9 +1,3 @@
-TODO: 
-- Pages to be made
- - Profile
-    - just view the users info (same page) 
- - Settings
-    - edit user data (same page) 
-    - delete account
-- admin page
-  - when the admin clicks on the users page (same page but without edit button)
+ToDo: 
+- Fix the Backend for InroPage, Profile and Settings
+- make sure DOB and Picture from file are accurate the intended data types

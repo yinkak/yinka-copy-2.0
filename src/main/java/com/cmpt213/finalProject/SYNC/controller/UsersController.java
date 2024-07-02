@@ -47,17 +47,17 @@ public String registerUser(@ModelAttribute UserModel userModel, Model model) {
     // Set the hashed password in the userModel
     userModel.setPassword(hashedPassword);
 
-    // // Hard code gender to be null
-    // userModel.setGender(null);
-    // userModel.setDob(null);
-    // userModel.setLocation(null);
-    // userModel.setPhoneNumber(0000000000);
-    // userModel.setPictureUpload(null);
+    // Hard code gender to be null
+    userModel.setGender("dfklj");
+    userModel.setDob("dfklj");
+    userModel.setLocation("dfklj");
+    userModel.setPhoneNumber(0);
+    userModel.setPictureUpload("dfklj");
 
 
     // Use the hashed password and null gender in the registration
     UserModel registeredUser = userService.registerUser(userModel.getLogin(), userModel.getPassword(),
-            userModel.getEmail(), userModel.getName()/*userModel.getGender(), userModel.getDob(), userModel.getLocation(), userModel.getPhoneNumber(), userModel.getPictureUpload()*/);
+            userModel.getEmail(), userModel.getName(),userModel.getGender(), userModel.getDob(), userModel.getLocation(), userModel.getPhoneNumber(), userModel.getPictureUpload());
 
     if (registeredUser == null) {
         System.out.println("Registration failed: duplicate user or invalid data");

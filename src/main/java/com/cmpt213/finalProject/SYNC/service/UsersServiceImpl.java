@@ -15,7 +15,7 @@ public class UsersServiceImpl implements UsersService {
     private UserRepository userRepository;
 
     @Override
-    public UserModel registerUser(String login, String password, String email, String name/*  String gender, String dob, String location, int phoneNumber, String pictureUpload*/) {
+    public UserModel registerUser(String login, String password, String email, String name,  String gender, String dob, String location, Integer phoneNumber, String pictureUpload) {
         if (login == null || password == null) {
             System.out.println("Registration failed: login or password is null");
             return null;

@@ -1,0 +1,15 @@
+TODO: 
+- We need to make the form for the very first time a user registers and make them upload the extra info
+- Find a way to upload an image through files for profile picture
+- Home Page 
+  - add a column on the right side showing an Add friends section with a text box
+  - we can implement the actual adding of the user later
+- Admin Page
+  - link the username to a page showing the users specific details
+- Make the styling consistent and fix issues related to them
+- Pages to be made
+ - Profile
+    - just view the users info
+ - Settings
+    - edit user data
+    - delete/deactivate account

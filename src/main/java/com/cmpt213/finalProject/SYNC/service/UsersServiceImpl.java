@@ -7,6 +7,7 @@ import com.cmpt213.finalProject.SYNC.models.UserModel;
 import com.cmpt213.finalProject.SYNC.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -30,11 +31,11 @@ public class UsersServiceImpl implements UsersService {
             user.setPassword(password);
             user.setEmail(email);
             user.setName(name);
-            // user.setGender(gender);
-            // user.setDob(dob);
-            // user.setLocation(location);
-            // user.setPhoneNumber(phoneNumber);
-            // user.setPictureUpload(pictureUpload);
+            user.setGender(gender);
+            user.setDob(dob);
+            user.setLocation(location);
+            user.setPhoneNumber(phoneNumber);
+            user.setPictureUpload(pictureUpload);
 
             return userRepository.save(user);
         }
@@ -67,4 +68,22 @@ public class UsersServiceImpl implements UsersService {
             userRepository.save(user);
         }
     }
+    
+    // Method to update user information
+    public UserModel updateUser(String login, String dob, String gender, int phoneNumber, String pictureUpload) {
+        Optional<UserModel> optionalUser = userRepository.findByLogin(login);
+        if (optionalUser.isPresent()) {
+            UserModel user = optionalUser.get();
+            // Update the user fields
+            user.setDob(dob);
+            user.setGender(gender);
+            user.setPhoneNumber(phoneNumber);
+            user.setPictureUpload(pictureUpload);
+            // Save the updated user back to the repository
+            userRepository.save(user);
+            return user;
+        }
+        return null; // Handle case where user is not found
+    }
+
 }

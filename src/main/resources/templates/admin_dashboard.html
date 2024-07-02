@@ -24,7 +24,8 @@
             <tbody>
                 <tr th:each="user : ${allUsers}">
                     <td th:text="${user.id}"></td>
-                    <td th:text="${user.login}"></td>
+                    <!-- Link the login name to profile.html with user ID -->
+                    <td><a th:href="@{'/profile.html?id=' + ${user.id}}" th:text="${user.login}"></a></td>
                     <td th:text="${user.email}"></td>
                     <td th:text="${user.name}"></td>
                     <td th:text="${user.isAdmin}"></td>

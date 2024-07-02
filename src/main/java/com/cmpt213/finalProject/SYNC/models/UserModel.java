@@ -2,6 +2,8 @@ package com.cmpt213.finalProject.SYNC.models;
 
 import java.util.Objects;
 
+
+
 import jakarta.persistence.*;
 
 @Entity
@@ -127,13 +129,6 @@ public class UserModel {
         this.gender = gender;
     }
 
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
 
     public String getLocation() {
         return location;
@@ -143,6 +138,17 @@ public class UserModel {
         this.location = location;
     }
 
+  
+    
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
     public String getPictureUpload() {
         return pictureUpload;
     }
@@ -150,7 +156,7 @@ public class UserModel {
     public void setPictureUpload(String pictureUpload) {
         this.pictureUpload = pictureUpload;
     }
-    
+
     public Integer getPhoneNumber() {
         return phoneNumber;
     }

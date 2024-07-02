@@ -1,6 +1,10 @@
 package com.cmpt213.finalProject.SYNC.controller;
 
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,18 +12,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import com.cmpt213.finalProject.SYNC.models.UserModel;
-
+import com.cmpt213.finalProject.SYNC.repository.UserRepository;
 import com.cmpt213.finalProject.SYNC.service.UsersService;
+
+
 
 @Controller
 public class UsersController {
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private UsersService userService;
     
-
     @GetMapping("/")
     public String getHomePage() {
         return "index";
@@ -37,36 +47,35 @@ public class UsersController {
         return "login_page";
     }
 
-@PostMapping("/register")
-public String registerUser(@ModelAttribute UserModel userModel, Model model) {
-    System.out.println("register request: " + userModel);
+    @PostMapping("/register")
+    public String registerUser(@ModelAttribute UserModel userModel, Model model) {
+        System.out.println("register request: " + userModel);
 
-    // Hash the password using your custom hash function
-    String hashedPassword = UserModel.hashFunc(userModel.getPassword());
+        // Hash the password using your custom hash function
+        String hashedPassword = UserModel.hashFunc(userModel.getPassword());
 
-    // Set the hashed password in the userModel
-    userModel.setPassword(hashedPassword);
+        // Set the hashed password in the userModel
+        userModel.setPassword(hashedPassword);
 
-    // Hard code gender to be null
-    userModel.setGender("dfklj");
-    userModel.setDob("dfklj");
-    userModel.setLocation("dfklj");
-    userModel.setPhoneNumber(0);
-    userModel.setPictureUpload("dfklj");
+        // Hard code gender to be null
+        userModel.setGender("not-given");
+        userModel.setDob("not-given"); 
+        userModel.setLocation("not-given");
+        userModel.setPhoneNumber(0);
+        userModel.setPictureUpload("not-given");
 
+        // Use the hashed password and null gender in the registration
+        UserModel registeredUser = userService.registerUser(userModel.getLogin(), userModel.getPassword(),
+                userModel.getEmail(), userModel.getName(), userModel.getGender(), userModel.getDob(), userModel.getLocation(), userModel.getPhoneNumber(), userModel.getPictureUpload());
 
-    // Use the hashed password and null gender in the registration
-    UserModel registeredUser = userService.registerUser(userModel.getLogin(), userModel.getPassword(),
-            userModel.getEmail(), userModel.getName(),userModel.getGender(), userModel.getDob(), userModel.getLocation(), userModel.getPhoneNumber(), userModel.getPictureUpload());
+        if (registeredUser == null) {
+            System.out.println("Registration failed: duplicate user or invalid data");
+            return "error_page";
+        }
 
-    if (registeredUser == null) {
-        System.out.println("Registration failed: duplicate user or invalid data");
-        return "error_page";
+        model.addAttribute("userLogin", userModel.getLogin());
+        return "personalAccount";
     }
-
-    model.addAttribute("userLogin", userModel.getLogin());
-    return "personalAccount";
-}
 
     @PostMapping("/login")
     public String loginUser(@ModelAttribute UserModel userModel, Model model) {
@@ -131,7 +140,36 @@ public String registerUser(@ModelAttribute UserModel userModel, Model model) {
         userService.activateUser(id);
         return "redirect:/admin/home";
     }
+
+    @GetMapping("/checkUsernameAvailability")
+    @ResponseBody
+    public Map<String, Boolean> checkUsernameAvailability(@RequestParam String username) {
+        boolean isUsernameAvailable = !(userRepository.findByLogin(username).isPresent());
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("available", isUsernameAvailable);
+        return response;
+    }
+    // THIS NEEDS TO BE FIXED FOR THE INTRO PAGE
+    //DATA HANDLING FOR ADDITIONAL INFO
+    @PostMapping("/intro")
+    public String getAdditionalInfo(@ModelAttribute UserModel userModel, Model model) {
+    // Update the user with additional information
+    UserModel updatedUser = userService.updateUser(userModel.getLogin(), userModel.getDob(), userModel.getGender(), userModel.getPhoneNumber(), userModel.getPictureUpload());
+
+    if (updatedUser != null) {
+        model.addAttribute("userLogin", updatedUser.getLogin());
+        return "personalAccount";
+    } else {
+        // Handle case where user update fails (optional)
+        return "error_page";
+    }
+}
+
+//need to implement the backend for deleting the user
+@PostMapping("/delete")
+public String delUser() {
     
-
-
+    return "delete_page";
+}
+    
 }

@@ -164,7 +164,9 @@
                     <p>Create an account to connect with your friends on Sync.</p>
                     <form id="registration-form" th:action="@{/register}" th:object="${user}" method="post">
                         <div class="mb-3 password-toggle">
+                          
                             <input type="text" class="form-control" id="login" th:field="*{login}" placeholder="Username" required>
+                              <div id="username-validation-msg" class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3 password-toggle">
                             <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Email" required>
@@ -187,7 +189,7 @@
                             </div>
                             <div id="confirm-password-text" class="confirm-password-text text-danger"></div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <button type="submit"  id="registration-button"class="btn btn-primary">Register</button>
                         <div>
                             Already have an account? <a th:href="@{/login}">Log in</a>
                         </div>
@@ -321,6 +323,40 @@
                 event.preventDefault(); // Prevent form submission
             }
         });
+        document.addEventListener("DOMContentLoaded", function() {
+            const usernameInput = document.getElementById("login");
+            const registerBtn = document.getElementById("registration-button");
+            const usernameValidationMsg = document.getElementById("username-validation-msg");
+
+            usernameInput.addEventListener("input", function() {
+                const username = usernameInput.value.trim();
+
+                if (username.length >= 3) {
+                    fetch('/checkUsernameAvailability?username=' + username)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.available) {
+                                usernameInput.classList.remove("is-invalid");
+                                usernameValidationMsg.innerText = ""; // Clear previous error message
+                                registerBtn.disabled = false;
+                            } else {
+                                usernameInput.classList.add("is-invalid");
+                                usernameValidationMsg.innerText = "Username is not available. Please choose another."; // Display error message
+                                registerBtn.disabled = true;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error checking username availability:', error);
+                            registerBtn.disabled = true;
+                        });
+                } else {
+                    usernameInput.classList.remove("is-invalid");
+                    usernameValidationMsg.innerText = ""; // Clear message when username is too short
+                    registerBtn.disabled = true;
+                }
+            });
+        });
+
     </script>
 </body>
 </html>

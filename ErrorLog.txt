@@ -1,0 +1,4 @@
+- Controller File
+  - Login info is not be validated 
+  - Username duplication is not working 
+    - username should be checked dynamically as the user enters the username so until they make a unique one they will not be allowed to submit it

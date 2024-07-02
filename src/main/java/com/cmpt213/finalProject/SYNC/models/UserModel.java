@@ -1,4 +1,5 @@
 package com.cmpt213.finalProject.SYNC.models;
+
 import java.util.Objects;
 
 import jakarta.persistence.*;
@@ -10,10 +11,21 @@ public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    String login;
+    String login; //username
     String password;
     String email;
     String name;
+    boolean isAdmin;
+    boolean isActive = true;
+    String gender; 
+    String dob;
+    String location; 
+    String pictureUpload; 
+    long phoneNumber; 
+
+
+    
+
     @Override
     public int hashCode() {
         return Objects.hash(id, login, password, email);
@@ -54,35 +66,97 @@ public class UserModel {
     public Integer getId() {
         return id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
+
     public String getLogin() {
         return login;
     }
+
     public void setLogin(String login) {
         this.login = login;
     }
+
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
     
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+    
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getPictureUpload() {
+        return pictureUpload;
+    }
+
+    public void setPictureUpload(String pictureUpload) {
+        this.pictureUpload = pictureUpload;
+    }
+    
+    public long getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public static String hashFunc(String password) {
@@ -107,12 +181,9 @@ public class UserModel {
         }
         return hashedPass.toString();
     }
+
     @Override
     public String toString() {
-        return "UserModel [id=" + id + ", login=" + login + ", email=" + email + "]";
+        return "UserModel [id=" + id + ", login=" + login + ", email=" + email + ", isAdmin=" + isAdmin + ", isActive=" + isActive + "]";
     }
-    
-
-    
-
 }

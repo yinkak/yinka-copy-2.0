@@ -5,34 +5,141 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Sync</title>
     <!-- Bootstrap CSS -->
+    <link href="/css/header.css" rel="stylesheet">
+    <link href="/css/footer.css" rel="stylesheet">
+    <link href="/css/body.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000; /* Ensure navbar stays above other content */
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 95vh;
+            position: relative;
+        }
+        .registration-container {
+            background-color: #fff; /* Background color for depth perception */
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15); /* Depth perception styling */
+            padding: 2rem;
+            border-radius: 0.5rem;
+            max-width: 900px; /* Limit width to avoid affecting header/footer */
+            width: 100%; /* Ensure full width responsiveness */
+            margin: 2rem; /* Space around the container */
+            box-sizing: border-box; /* Include padding and border in total width/height */
+            margin-left: 200px;
+            margin-bottom: 250px;
+        }
+        footer {
+            margin-top: auto;
+            background-color: #343a40;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+            z-index: 1000; /* Ensure footer stays above other content */
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #007bff;
+        }
+        p {
+            font-size: 1.1rem;
+        }
+        .form-control {
+            border-radius: 0.375rem;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 1px solid #ced4da;
+            position: relative;
+            text-align: center;
+        }
+        .password-toggle {
+            position: relative;
+        }
+        .toggle-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        .eye-off {
+            background-image: url("data:image/svg+xml,%3Csvg fill='none' height='24' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+        }
+        .eye-on {
+            background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' %3F%3E%3Csvg fill='none' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 6.36185C8.36209 5.55936 10.0212 5 12 5C18.3074 5 21.3671 10.6832 21.9109 11.808C21.9705 11.9311 21.9702 12.0694 21.9107 12.1926C21.5585 12.9208 20.1542 15.5545 17.5 17.3244M14 18.8001C13.3735 18.9286 12.7071 19 12 19C5.69265 19 2.63286 13.3168 2.08909 12.192C2.02953 12.0689 2.03049 11.9291 2.09008 11.8059C2.30875 11.3539 2.9298 10.1741 4 8.92114' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'/%3E%3Cpath d='M10 9.76389C10.5308 9.28885 11.2316 9 12 9C13.6569 9 15 10.3431 15 12C15 12.7684 14.7111 13.4692 14.2361 14' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'/%3E%3Cpath d='M3 3L21 21' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'/%3E%3C/svg%3E");
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .text-success {
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+        .bg-dark {
+            background-color: #343a40 !important;
+        }
+        .text-white {
+            color: #fff !important;
+        }
+        .py-3 {
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+        }
+        .whitespace {
+            height: 2rem; /* Adjust for spacing */
+        }
+        .forgot-pw a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .forgot-pw a:hover {
+            text-decoration: underline;
+        }
+        .mt-5 {
+            margin-top: 3rem !important;
+        }
+        .mt-3 {
+            margin-top: 1.5rem !important;
+        }
+        .is-invalid {
+            border-color: red;
+        }
+    </style>
 </head>
-<style>
-    body, html {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-    .content {
-        flex: 1;
-    }
-    .footer {
-        position: sticky;
-        bottom: 0;
-        width: 100%;
-    }
 
-    .whitespace {
-        width: 10px;
-        height: 30px;
-    }
-
-    .forgot-pw{
-        padding: 10px;
-        text-align: left;
-    }
-
-</style>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -55,41 +162,34 @@
     </nav>
 
     <!-- Main Content -->
+     <!-- Error Ensuring the Backend -->
     <div class="container mt-5 content">
-        <div class="text-center">
-            <h1>Login</h1>
-            <p>Welcome back! Please log in to your account.</p>
-            <form th:action="@{/login}" th:object="${user}" method="post">
-                <div class="mb-3">
-                    <label for="login" class="form-label">Login</label>
-                    <input type="text" class="form-control" id="login" th:field="*{login}" required>
+        <div class="registration-container">
+            <div class="text-center">
+                <h1>Login</h1>
+                <p>Welcome back! Please log in to your account.</p>
+                <form th:action="@{/login}" th:object="${user}" method="post">
+                    <div class="mb-3 password-toggle">
+                        <input type="text" class="form-control" id="login" th:field="*{login}" placeholder="Username" required>
+                    </div>
+                    <div class="mb-3 password-toggle">
+                        <div class="password-toggle">
+                            <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Password" required>
+                            <span class="toggle-icon eye-off" onclick="togglePassword()"></span>
+                        </div>
+                    </div>
+                    <div class="forgot-pw">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <div class="whitespace"></div>
+                    <div>
+                        Don't have an account? <a th:href="@{/register}">Sign up</a>
+                    </div>
+                </form>
+                <div th:if="${error}" class="mt-3">
+                    <p class="text-danger">Invalid login credentials</p>
                 </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" th:field="*{password}" required>
-                    <input type="checkbox"  onclick="togglePassword()" >show password
-                </div>
-                <div class="forgot-pw">
-                    <a href="#">Forgot Password?</a>
-                </div>
-                <script>
-                    function togglePassword(){
-                        var x = document.getElementById("password");
-                        if (x.type === "password") {
-                            x.type = "text";
-                        } else {
-                            x.type = "password";
-                        }
-                    }
-                </script>
-                <button type="submit" class="btn btn-primary">Login</button>
-                <div class="whitespace"></div>
-                <div>
-                    Don't have an account? <a th:href="@{/register}">Sign up</a>
-                </div>
-            </form>
-            <div th:if="${error}" class="mt-3">
-                <p class="text-danger">Invalid login credentials</p>
             </div>
         </div>
     </div>
@@ -103,5 +203,19 @@
 
     <!-- Optional Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function togglePassword() {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+                document.querySelector('.toggle-icon').classList.remove('eye-off');
+                document.querySelector('.toggle-icon').classList.add('eye-on');
+            } else {
+                x.type = "password";
+                document.querySelector('.toggle-icon').classList.remove('eye-on');
+                document.querySelector('.toggle-icon').classList.add('eye-off');
+            }
+        }
+    </script>
 </body>
 </html>

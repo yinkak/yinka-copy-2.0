@@ -15,7 +15,7 @@ public class UsersServiceImpl implements UsersService {
     private UserRepository userRepository;
 
     @Override
-    public UserModel registerUser(String login, String password, String email, String name) {
+    public UserModel registerUser(String login, String password, String email, String name/*  String gender, String dob, String location, int phoneNumber, String pictureUpload*/) {
         if (login == null || password == null) {
             System.out.println("Registration failed: login or password is null");
             return null;
@@ -30,6 +30,12 @@ public class UsersServiceImpl implements UsersService {
             user.setPassword(password);
             user.setEmail(email);
             user.setName(name);
+            // user.setGender(gender);
+            // user.setDob(dob);
+            // user.setLocation(location);
+            // user.setPhoneNumber(phoneNumber);
+            // user.setPictureUpload(pictureUpload);
+
             return userRepository.save(user);
         }
     }

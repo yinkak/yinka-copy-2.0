@@ -37,29 +37,36 @@ public class UsersController {
         return "login_page";
     }
 
-    @PostMapping("/register")
-    public String registerUser(@ModelAttribute UserModel userModel, Model model) {
-        System.out.println("register request: " + userModel);
-       
-    
-        // Hash the password using your custom hash function
-        String hashedPassword = UserModel.hashFunc(userModel.getPassword());
+@PostMapping("/register")
+public String registerUser(@ModelAttribute UserModel userModel, Model model) {
+    System.out.println("register request: " + userModel);
 
-        // Set the hashed password in the userModel
-        userModel.setPassword(hashedPassword);
+    // Hash the password using your custom hash function
+    String hashedPassword = UserModel.hashFunc(userModel.getPassword());
 
-        // Use the hashed password instead of the plain password
-        UserModel registeredUser = userService.registerUser(userModel.getLogin(), userModel.getPassword(),
-                userModel.getEmail(), userModel.getName());
+    // Set the hashed password in the userModel
+    userModel.setPassword(hashedPassword);
 
-        if (registeredUser == null) {
-            System.out.println("Registration failed: duplicate user or invalid data");
-            return "error_page";
-        }
+    // // Hard code gender to be null
+    // userModel.setGender(null);
+    // userModel.setDob(null);
+    // userModel.setLocation(null);
+    // userModel.setPhoneNumber(0000000000);
+    // userModel.setPictureUpload(null);
 
-        model.addAttribute("userLogin", userModel.getLogin());
-        return "personalAccount";
+
+    // Use the hashed password and null gender in the registration
+    UserModel registeredUser = userService.registerUser(userModel.getLogin(), userModel.getPassword(),
+            userModel.getEmail(), userModel.getName()/*userModel.getGender(), userModel.getDob(), userModel.getLocation(), userModel.getPhoneNumber(), userModel.getPictureUpload()*/);
+
+    if (registeredUser == null) {
+        System.out.println("Registration failed: duplicate user or invalid data");
+        return "error_page";
     }
+
+    model.addAttribute("userLogin", userModel.getLogin());
+    return "personalAccount";
+}
 
     @PostMapping("/login")
     public String loginUser(@ModelAttribute UserModel userModel, Model model) {

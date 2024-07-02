@@ -17,11 +17,12 @@ public class UserModel {
     String name;
     boolean isAdmin;
     boolean isActive = true;
-    String gender; 
-    String dob;
-    String location; 
-    String pictureUpload; 
-    long phoneNumber; 
+    // String gender; 
+    // String dob;
+    // String location; 
+    // String pictureUpload; 
+    
+    // int phoneNumber; 
 
 
     
@@ -119,45 +120,45 @@ public class UserModel {
         this.isActive = isActive;
     }
     
-    public String getGender() {
-        return gender;
-    }
+    // public String getGender() {
+    //     return gender;
+    // }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+    // public void setGender(String gender) {
+    //     this.gender = gender;
+    // }
 
-    public String getDob() {
-        return dob;
-    }
+    // public String getDob() {
+    //     return dob;
+    // }
 
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
+    // public void setDob(String dob) {
+    //     this.dob = dob;
+    // }
 
-    public String getLocation() {
-        return location;
-    }
+    // public String getLocation() {
+    //     return location;
+    // }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
+    // public void setLocation(String location) {
+    //     this.location = location;
+    // }
 
-    public String getPictureUpload() {
-        return pictureUpload;
-    }
+    // public String getPictureUpload() {
+    //     return pictureUpload;
+    // }
 
-    public void setPictureUpload(String pictureUpload) {
-        this.pictureUpload = pictureUpload;
-    }
+    // public void setPictureUpload(String pictureUpload) {
+    //     this.pictureUpload = pictureUpload;
+    // }
     
-    public long getPhoneNumber() {
-        return phoneNumber;
-    }
+    // public int getPhoneNumber() {
+    //     return phoneNumber;
+    // }
 
-    public void setPhoneNumber(long phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+    // public void setPhoneNumber(int phoneNumber) {
+    //     this.phoneNumber = phoneNumber;
+    // }
 
     public static String hashFunc(String password) {
         // Step 1: Mirror the password

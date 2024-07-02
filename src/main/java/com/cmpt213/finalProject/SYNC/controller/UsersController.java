@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import com.cmpt213.finalProject.SYNC.models.UserModel;
 
@@ -127,17 +126,5 @@ public class UsersController {
     }
     
 
-    @PostMapping("/intro")
-public String submitIntroForm(@ModelAttribute UserModel userModel, Model model) {
-    System.out.println("intro form submission: " + userModel);
-
-    // Update user information once they have registered the new stuff
-    userService.updateUserDetails(userModel.getLogin(), userModel.getGender(),
-                                   userModel.getDob(), userModel.getLocation(),
-                                   userModel.getPhoneNumber());
-
-    // Redirect to a success page or any appropriate page after intro form submission
-    return "success_page";
-}
 
 }

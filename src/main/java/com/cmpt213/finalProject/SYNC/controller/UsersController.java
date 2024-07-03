@@ -55,7 +55,7 @@ public class UsersController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute UserModel userModel, Model model) {
+    public String registerUser(@ModelAttribute UserModel userModel, Model model , HttpServletRequest request, HttpSession session) {
         System.out.println("register request: " + userModel);
 
         // Hash the password using your custom hash function
@@ -82,6 +82,7 @@ public class UsersController {
         }
 
         model.addAttribute("userLogin", userModel.getLogin());
+        request.getSession().setAttribute("session_user", userModel);
         return "personalAccount";
     }
 

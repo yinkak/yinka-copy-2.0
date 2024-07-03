@@ -25,7 +25,6 @@ public class UserModel {
     String pictureUpload; 
     Integer phoneNumber; 
 
-
     
 
     @Override

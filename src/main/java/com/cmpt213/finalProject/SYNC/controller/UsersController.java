@@ -307,4 +307,14 @@ public class UsersController {
         return "delete_confirmation"; // Return the view name for the delete confirmation page
     }
 
+    @GetMapping("/adminlogout")
+    public String logoutAdmin(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/adminlogin";
+    }
+
+
 }

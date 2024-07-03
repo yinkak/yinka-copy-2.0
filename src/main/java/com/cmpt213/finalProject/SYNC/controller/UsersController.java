@@ -1,10 +1,9 @@
 package com.cmpt213.finalProject.SYNC.controller;
 
-
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,7 +56,8 @@ public class UsersController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute UserModel userModel, Model model , HttpServletRequest request, HttpSession session) {
+    public String registerUser(@ModelAttribute UserModel userModel, Model model, HttpServletRequest request,
+            HttpSession session) {
         System.out.println("register request: " + userModel);
 
         // Hash the password using your custom hash function
@@ -68,9 +68,9 @@ public class UsersController {
 
         // Hard code gender to be null
         userModel.setGender("not-given");
-        userModel.setDob(LocalDate.of(1900, 1, 1));
+        userModel.setDob("");
         userModel.setLocation("not-given");
-        userModel.setPhoneNumber(0);
+        userModel.setPhoneNumber("");
 
         // Use the hashed password and null gender in the registration
         UserModel registeredUser = userService.registerUser(userModel.getLogin(), userModel.getPassword(),
@@ -84,22 +84,21 @@ public class UsersController {
 
         model.addAttribute("userLogin", userModel.getLogin());
         request.getSession().setAttribute("session_user", userModel);
-        return "personalAccount";
+        return "redirect:/intro";
     }
 
     @PostMapping("/login")
     public String loginUser(@ModelAttribute UserModel userModel, Model model, HttpServletRequest request,
             HttpSession session) {
-
-        System.out.println("login request" + userModel);
+        System.out.println("login request: " + userModel);
         String hashedPassword = UserModel.hashFunc(userModel.getPassword());
         userModel.setPassword(hashedPassword);
         UserModel authenticate = userService.authentication(userModel.getLogin(), userModel.getPassword());
 
         if (authenticate != null) {
             if (authenticate.isActive()) {
-                model.addAttribute("userLogin", userModel.getLogin());
-                request.getSession().setAttribute("session_user", userModel);
+                model.addAttribute("userLogin", authenticate.getLogin());
+                request.getSession().setAttribute("session_user", authenticate); // Store authenticated user with ID
                 return "personalAccount";
             } else {
                 model.addAttribute("error", "You have been deactivated. Please contact admin!");
@@ -109,7 +108,6 @@ public class UsersController {
             model.addAttribute("error", "Invalid login credentials");
             return "login_page";
         }
-
     }
 
     @GetMapping("/adminlogin")
@@ -157,6 +155,12 @@ public class UsersController {
 
     }
 
+    @GetMapping("/intro")
+    public String introPage(Model model, HttpSession session) {
+        model.addAttribute("user", (UserModel) session.getAttribute("session_admin"));
+        return "introPage";
+    }
+
     @PostMapping("/admin/deactivate/{id}")
     public String deactivateUser(@PathVariable("id") Integer id) {
         userService.deactivateUser(id);
@@ -187,28 +191,118 @@ public class UsersController {
         return response;
     }
 
+    @GetMapping("/userEditAccount")
+    public String getEditUserForm(Model model, HttpSession session) {
+        UserModel sessionUser = (UserModel) session.getAttribute("session_user");
+
+        if (sessionUser == null || sessionUser.getId() == null) {
+            // If no user is in session or ID is null, redirect to login
+            return "redirect:/login";
+        }
+
+        // Find the user from the database using the ID from the session
+        Optional<UserModel> optionalUser = userRepository.findById(sessionUser.getId());
+        if (!optionalUser.isPresent()) {
+            // If user is not found in the database, redirect to login or an error page
+            return "redirect:/login";
+        }
+
+        UserModel user = optionalUser.get();
+        // Add the user to the model to pre-fill the form
+        model.addAttribute("user", user);
+        return "editUser"; // Return the view name for the edit user form
+    }
+
+    @GetMapping("/seeProfile")
+    public String seeProfile(Model model, HttpSession session) {
+        UserModel sessionUser = (UserModel) session.getAttribute("session_user");
+
+        if (sessionUser == null || sessionUser.getId() == null) {
+            return "redirect:/login";
+        }
+
+        // Find the user from the database using the ID from the session
+        Optional<UserModel> optionalUser = userRepository.findById(sessionUser.getId());
+        if (!optionalUser.isPresent()) {
+            return "redirect:/login";
+        }
+
+        UserModel user = optionalUser.get();
+        model.addAttribute("user", user);
+        return "viewProfile";
+    }
+
+    @PostMapping("/editUser")
+    public String editUser(@ModelAttribute UserModel userModel, Model model, HttpSession session) {
+        UserModel sessionUser = (UserModel) session.getAttribute("session_user");
+
+        if (sessionUser == null) {
+            // If no user is in session, redirect to login
+            return "redirect:/login";
+        }
+        System.out.println(userModel.getGender());
+        // Update the user with additional information
+        UserModel updatedUser = userService.updateUser(sessionUser.getLogin(), userModel.getDob(),
+                userModel.getGender(), userModel.getPhoneNumber(), userModel.getLocation());
+
+        if (updatedUser == null) {
+            // Handle case where the user could not be updated
+            model.addAttribute("error", "Failed to update user information.");
+            return "editUser";
+        }
+
+        session.setAttribute("session_user", updatedUser);
+
+        model.addAttribute("userLogin", updatedUser.getLogin());
+        model.addAttribute("user", updatedUser);
+
+        return "personalAccount";
+    }
+
     // THIS NEEDS TO BE FIXED FOR THE INTRO PAGE
     // DATA HANDLING FOR ADDITIONAL INFO
     @PostMapping("/intro")
-    public String getAdditionalInfo(@ModelAttribute UserModel userModel, Model model) {
-        // Update the user with additional information
-        UserModel updatedUser = userService.updateUser(userModel.getLogin(), userModel.getDob(), userModel.getGender(),
-                userModel.getPhoneNumber());
+    public String getAdditionalInfo(@ModelAttribute UserModel userModel, Model model, HttpSession session) {
+        UserModel sessionUser = (UserModel) session.getAttribute("session_user");
 
-        if (updatedUser != null) {
-            model.addAttribute("userLogin", updatedUser.getLogin());
-            return "personalAccount";
-        } else {
-            // Handle case where user update fails (optional)
-            return "error_page";
+        if (sessionUser == null) {
+            model.addAttribute("error", "Session expired. Please log in again.");
+            return "login_page";
         }
+
+        UserModel updatedUser = userService.updateUser(sessionUser.getLogin(), userModel.getDob(),
+                userModel.getGender(), userModel.getPhoneNumber(), userModel.getLocation());
+
+        if (updatedUser == null) {
+            model.addAttribute("error", "Failed to update user information.");
+            return "introPage";
+        }
+
+        session.setAttribute("session_user", updatedUser);
+
+        model.addAttribute("userLogin", updatedUser.getLogin());
+        model.addAttribute("user", updatedUser);
+
+        return "personalAccount";
     }
 
     // need to implement the backend for deleting the user
-    @PostMapping("/delete")
-    public String delUser() {
+    @GetMapping("/delete")
+    public String delUser(HttpSession session) {
+        UserModel sessionUser = (UserModel) session.getAttribute("session_user");
 
-        return "delete_page";
+        if (sessionUser == null || sessionUser.getId() == null) {
+            // If no user is in session or ID is null, redirect to login
+            return "redirect:/login";
+        }
+
+        // Delete the user from the database
+        userService.deleteUserById(sessionUser.getId());
+
+        // Invalidate the session after deletion
+        session.invalidate();
+
+        return "redirect:/register"; // Return the view name for the delete confirmation page
     }
 
 }

@@ -21,10 +21,10 @@ public class UserModel {
     boolean isAdmin;
     boolean isActive = true;
     String gender; 
-    LocalDate dob;
+    String dob;
     String location; 
-    String pictureUpload; 
-    Integer phoneNumber; 
+    String pictureUpload; // do not need
+    String phoneNumber; 
     
 
     @Override
@@ -138,19 +138,19 @@ public class UserModel {
     }
 
 
-    public LocalDate getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(LocalDate dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 
-    public Integer getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Integer phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

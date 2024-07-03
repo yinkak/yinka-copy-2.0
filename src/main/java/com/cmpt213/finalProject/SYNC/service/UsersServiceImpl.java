@@ -17,7 +17,7 @@ public class UsersServiceImpl implements UsersService {
     private UserRepository userRepository;
 
     @Override
-    public UserModel registerUser(String login, String password, String email, String name,  String gender, LocalDate dob, String location, Integer phoneNumber) {
+    public UserModel registerUser(String login, String password, String email, String name,  String gender, String dob, String location, String phoneNumber) {
         if (login == null || password == null) {
             System.out.println("Registration failed: login or password is null");
             return null;
@@ -70,19 +70,29 @@ public class UsersServiceImpl implements UsersService {
     }
     
     // Method to update user information
-    public UserModel updateUser(String login, LocalDate dob, String gender, int phoneNumber) {
+    public UserModel updateUser(String login, String dob, String gender, String phoneNumber, String location) {
         Optional<UserModel> optionalUser = userRepository.findByLogin(login);
+
+        System.out.println(login);
+    
         if (optionalUser.isPresent()) {
             UserModel user = optionalUser.get();
             // Update the user fields
             user.setDob(dob);
             user.setGender(gender);
             user.setPhoneNumber(phoneNumber);
+            user.setLocation(location);
             // Save the updated user back to the repository
             userRepository.save(user);
             return user;
         }
         return null; // Handle case where user is not found
     }
+
+    public void deleteUserById(Integer userId) {
+        userRepository.deleteById(userId);
+    }
+
+
 
 }

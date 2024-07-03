@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.cmpt213.finalProject.SYNC.models.UserModel;
 import com.cmpt213.finalProject.SYNC.repository.UserRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,7 @@ public class UsersServiceImpl implements UsersService {
     private UserRepository userRepository;
 
     @Override
-    public UserModel registerUser(String login, String password, String email, String name,  String gender, String dob, String location, Integer phoneNumber, String pictureUpload) {
+    public UserModel registerUser(String login, String password, String email, String name,  String gender, LocalDate dob, String location, Integer phoneNumber) {
         if (login == null || password == null) {
             System.out.println("Registration failed: login or password is null");
             return null;
@@ -35,7 +36,6 @@ public class UsersServiceImpl implements UsersService {
             user.setDob(dob);
             user.setLocation(location);
             user.setPhoneNumber(phoneNumber);
-            user.setPictureUpload(pictureUpload);
 
             return userRepository.save(user);
         }
@@ -70,7 +70,7 @@ public class UsersServiceImpl implements UsersService {
     }
     
     // Method to update user information
-    public UserModel updateUser(String login, String dob, String gender, int phoneNumber, String pictureUpload) {
+    public UserModel updateUser(String login, LocalDate dob, String gender, int phoneNumber) {
         Optional<UserModel> optionalUser = userRepository.findByLogin(login);
         if (optionalUser.isPresent()) {
             UserModel user = optionalUser.get();
@@ -78,7 +78,6 @@ public class UsersServiceImpl implements UsersService {
             user.setDob(dob);
             user.setGender(gender);
             user.setPhoneNumber(phoneNumber);
-            user.setPictureUpload(pictureUpload);
             // Save the updated user back to the repository
             userRepository.save(user);
             return user;

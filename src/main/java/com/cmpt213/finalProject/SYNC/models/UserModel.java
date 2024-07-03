@@ -1,5 +1,6 @@
 package com.cmpt213.finalProject.SYNC.models;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 
@@ -20,11 +21,15 @@ public class UserModel {
     boolean isAdmin;
     boolean isActive = true;
     String gender; 
-    String dob;
+    LocalDate dob;
     String location; 
+<<<<<<< HEAD
     String pictureUpload; 
     Integer phoneNumber; 
 
+=======
+    Integer phoneNumber;
+>>>>>>> 91fd719 (made models and services for the dob)
     
 
     @Override
@@ -137,23 +142,13 @@ public class UserModel {
         this.location = location;
     }
 
-  
-    
 
-    public String getDob() {
+    public LocalDate getDob() {
         return dob;
     }
 
-    public void setDob(String dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
-    }
-
-    public String getPictureUpload() {
-        return pictureUpload;
-    }
-
-    public void setPictureUpload(String pictureUpload) {
-        this.pictureUpload = pictureUpload;
     }
 
     public Integer getPhoneNumber() {

@@ -1,8 +1,10 @@
 package com.cmpt213.finalProject.SYNC.controller;
 
+
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,15 +68,14 @@ public class UsersController {
 
         // Hard code gender to be null
         userModel.setGender("not-given");
-        userModel.setDob("not-given");
+        userModel.setDob(LocalDate.of(1900, 1, 1));
         userModel.setLocation("not-given");
         userModel.setPhoneNumber(0);
-        userModel.setPictureUpload("not-given");
 
         // Use the hashed password and null gender in the registration
         UserModel registeredUser = userService.registerUser(userModel.getLogin(), userModel.getPassword(),
                 userModel.getEmail(), userModel.getName(), userModel.getGender(), userModel.getDob(),
-                userModel.getLocation(), userModel.getPhoneNumber(), userModel.getPictureUpload());
+                userModel.getLocation(), userModel.getPhoneNumber());
 
         if (registeredUser == null) {
             System.out.println("Registration failed: duplicate user or invalid data");
@@ -192,7 +193,7 @@ public class UsersController {
     public String getAdditionalInfo(@ModelAttribute UserModel userModel, Model model) {
         // Update the user with additional information
         UserModel updatedUser = userService.updateUser(userModel.getLogin(), userModel.getDob(), userModel.getGender(),
-                userModel.getPhoneNumber(), userModel.getPictureUpload());
+                userModel.getPhoneNumber());
 
         if (updatedUser != null) {
             model.addAttribute("userLogin", updatedUser.getLogin());

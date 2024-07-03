@@ -288,7 +288,7 @@ public class UsersController {
 
     // need to implement the backend for deleting the user
     @GetMapping("/delete")
-    public String delUser(HttpSession session) {
+    public String delUser(HttpSession session, Model model) {
         UserModel sessionUser = (UserModel) session.getAttribute("session_user");
 
         if (sessionUser == null || sessionUser.getId() == null) {
@@ -302,7 +302,10 @@ public class UsersController {
         // Invalidate the session after deletion
         session.invalidate();
 
-        return "redirect:/register"; // Return the view name for the delete confirmation page
+        // Add a message to the model to be displayed on the confirmation page
+        model.addAttribute("message", "Your account has been successfully deleted.");
+
+        return "delete_confirmation"; // Return the view name for the delete confirmation page
     }
 
 }

@@ -82,33 +82,32 @@
         <div class="row">
             <div class="col-md-9">
                 <div id="para">
-                    <form id="editForm" th:object="${user}">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="login" th:field="*{login}" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" th:field="*{email}" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="phoneNumber" class="form-label">Phone Number</label>
-                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="location" class="form-label">Location</label>
-                            <input type="text" class="form-control" id="location" name="location" th:field="*{location}" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="dob" class="form-label">Date of Birth</label>
-                            <input type="date" class="form-control" id="dob" name="dob" th:field="*{dob}" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="gender" class="form-label">Gender</label>
-                            <input type="text" class="form-control" id="gender" name="gender" th:field="*{gender}" readonly>
-                        </div>
-                        
-                    </form>
+                    <table id="userData" class="table table-bordered">
+                        <tr>
+                            <th>Username</th>
+                            <td th:text="${user.login}"></td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td th:text="${user.email}"></td>
+                        </tr>
+                        <tr>
+                            <th>Phone Number</th>
+                            <td th:text="${user.phoneNumber}"></td>
+                        </tr>
+                        <tr>
+                            <th>Location</th>
+                            <td th:text="${user.location}"></td>
+                        </tr>
+                        <tr>
+                            <th>Date of Birth</th>
+                            <td th:text="${user.dob}"></td>
+                        </tr>
+                        <tr>
+                            <th>Gender</th>
+                            <td th:text="${user.gender}"></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

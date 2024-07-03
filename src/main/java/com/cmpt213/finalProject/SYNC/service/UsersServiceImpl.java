@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.cmpt213.finalProject.SYNC.models.UserModel;
 import com.cmpt213.finalProject.SYNC.repository.UserRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 

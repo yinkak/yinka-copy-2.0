@@ -23,13 +23,8 @@ public class UserModel {
     String gender; 
     LocalDate dob;
     String location; 
-<<<<<<< HEAD
     String pictureUpload; 
     Integer phoneNumber; 
-
-=======
-    Integer phoneNumber;
->>>>>>> 91fd719 (made models and services for the dob)
     
 
     @Override

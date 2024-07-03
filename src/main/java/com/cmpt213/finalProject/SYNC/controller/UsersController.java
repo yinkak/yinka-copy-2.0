@@ -1,6 +1,5 @@
 package com.cmpt213.finalProject.SYNC.controller;
 
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -15,12 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.cmpt213.finalProject.SYNC.models.UserModel;
 import com.cmpt213.finalProject.SYNC.repository.UserRepository;
 import com.cmpt213.finalProject.SYNC.service.UsersService;
 
-
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class UsersController {
@@ -29,7 +29,7 @@ public class UsersController {
 
     @Autowired
     private UsersService userService;
-    
+
     @GetMapping("/")
     public String getHomePage() {
         return "index";
@@ -42,9 +42,16 @@ public class UsersController {
     }
 
     @GetMapping("/login")
-    public String getLoginPage(Model model) {
-        model.addAttribute("user", new UserModel());
-        return "login_page";
+    public String getLoginPage(Model model, HttpServletRequest request, HttpSession session) {
+        UserModel user = (UserModel) session.getAttribute("session_user");
+        if (user == null) {
+            model.addAttribute("user", new UserModel());
+            return "login_page";
+        } else {
+            model.addAttribute("userLogin", user.getLogin());
+            return "personalAccount";
+        }
+
     }
 
     @PostMapping("/register")
@@ -59,14 +66,15 @@ public class UsersController {
 
         // Hard code gender to be null
         userModel.setGender("not-given");
-        userModel.setDob("not-given"); 
+        userModel.setDob("not-given");
         userModel.setLocation("not-given");
         userModel.setPhoneNumber(0);
         userModel.setPictureUpload("not-given");
 
         // Use the hashed password and null gender in the registration
         UserModel registeredUser = userService.registerUser(userModel.getLogin(), userModel.getPassword(),
-                userModel.getEmail(), userModel.getName(), userModel.getGender(), userModel.getDob(), userModel.getLocation(), userModel.getPhoneNumber(), userModel.getPictureUpload());
+                userModel.getEmail(), userModel.getName(), userModel.getGender(), userModel.getDob(),
+                userModel.getLocation(), userModel.getPhoneNumber(), userModel.getPictureUpload());
 
         if (registeredUser == null) {
             System.out.println("Registration failed: duplicate user or invalid data");
@@ -78,7 +86,9 @@ public class UsersController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute UserModel userModel, Model model) {
+    public String loginUser(@ModelAttribute UserModel userModel, Model model, HttpServletRequest request,
+            HttpSession session) {
+
         System.out.println("login request" + userModel);
         String hashedPassword = UserModel.hashFunc(userModel.getPassword());
         userModel.setPassword(hashedPassword);
@@ -87,6 +97,7 @@ public class UsersController {
         if (authenticate != null) {
             if (authenticate.isActive()) {
                 model.addAttribute("userLogin", userModel.getLogin());
+                request.getSession().setAttribute("session_user", userModel);
                 return "personalAccount";
             } else {
                 model.addAttribute("error", "You have been deactivated. Please contact admin!");
@@ -96,16 +107,24 @@ public class UsersController {
             model.addAttribute("error", "Invalid login credentials");
             return "login_page";
         }
+
     }
 
     @GetMapping("/adminlogin")
-    public String getAdminLoginPage(Model model) {
-        model.addAttribute("user", new UserModel());
-        return "admin_login_page";
+    public String getAdminLoginPage(Model model, HttpServletRequest request, HttpSession session) {
+        UserModel admin = (UserModel) session.getAttribute("session_admin");
+        if (admin == null) {
+            model.addAttribute("user", new UserModel());
+            return "admin_login_page";
+        } else {
+            return "redirect:/admin/home";
+        }
+
     }
 
     @PostMapping("/adminlogin")
-    public String adminLogin(@ModelAttribute UserModel userModel, Model model) {
+    public String adminLogin(@ModelAttribute UserModel userModel, Model model, HttpServletRequest request,
+            HttpSession session) {
         System.out.println("admin login request: " + userModel);
 
         String hashedPassword = UserModel.hashFunc(userModel.getPassword());
@@ -116,6 +135,7 @@ public class UsersController {
         if (authenticate != null && authenticate.isAdmin()) {
             model.addAttribute("userLogin", userModel.getLogin());
             model.addAttribute("allUsers", userService.getAllUsers());
+            request.getSession().setAttribute("session_admin", userModel);
             return "admin_dashboard";
         } else {
             System.out.println("Admin login failed: invalid credentials or not an admin");
@@ -124,9 +144,15 @@ public class UsersController {
     }
 
     @GetMapping("/admin/home")
-    public String getAdminHomePage(Model model) {
+    public String getAdminHomePage(Model model, HttpServletRequest request, HttpSession session) {
+        UserModel admin = (UserModel) session.getAttribute("session_admin");
+        if (admin == null) {
+            return "redirect:/adminlogin";
+        }
+
         model.addAttribute("allUsers", userService.getAllUsers());
         return "admin_dashboard";
+
     }
 
     @PostMapping("/admin/deactivate/{id}")
@@ -141,6 +167,15 @@ public class UsersController {
         return "redirect:/admin/home";
     }
 
+    @GetMapping("/userLogout")
+    public String logoutUser(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/login";
+    }
+
     @GetMapping("/checkUsernameAvailability")
     @ResponseBody
     public Map<String, Boolean> checkUsernameAvailability(@RequestParam String username) {
@@ -149,27 +184,29 @@ public class UsersController {
         response.put("available", isUsernameAvailable);
         return response;
     }
+
     // THIS NEEDS TO BE FIXED FOR THE INTRO PAGE
-    //DATA HANDLING FOR ADDITIONAL INFO
+    // DATA HANDLING FOR ADDITIONAL INFO
     @PostMapping("/intro")
     public String getAdditionalInfo(@ModelAttribute UserModel userModel, Model model) {
-    // Update the user with additional information
-    UserModel updatedUser = userService.updateUser(userModel.getLogin(), userModel.getDob(), userModel.getGender(), userModel.getPhoneNumber(), userModel.getPictureUpload());
+        // Update the user with additional information
+        UserModel updatedUser = userService.updateUser(userModel.getLogin(), userModel.getDob(), userModel.getGender(),
+                userModel.getPhoneNumber(), userModel.getPictureUpload());
 
-    if (updatedUser != null) {
-        model.addAttribute("userLogin", updatedUser.getLogin());
-        return "personalAccount";
-    } else {
-        // Handle case where user update fails (optional)
-        return "error_page";
+        if (updatedUser != null) {
+            model.addAttribute("userLogin", updatedUser.getLogin());
+            return "personalAccount";
+        } else {
+            // Handle case where user update fails (optional)
+            return "error_page";
+        }
     }
-}
 
-//need to implement the backend for deleting the user
-@PostMapping("/delete")
-public String delUser() {
-    
-    return "delete_page";
-}
-    
+    // need to implement the backend for deleting the user
+    @PostMapping("/delete")
+    public String delUser() {
+
+        return "delete_page";
+    }
+
 }

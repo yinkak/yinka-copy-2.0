@@ -5,6 +5,7 @@ import com.cmpt213.finalProject.SYNC.models.UserModel;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public interface UsersService {
@@ -15,5 +16,14 @@ public interface UsersService {
     void activateUser(Integer id);
     UserModel updateUser(String login, String dob, String gender, String phoneNumber, String location);
     public void deleteUserById(Integer userId);
+    public UserModel findByIdWithFriendRequests(Long id);
+    @Transactional
+    public boolean sendFriendRequest(Integer id, UserModel sessionUser);
+
+    @Transactional
+    public List<UserModel> findRequestedFriends(UserModel sessionUser);
+
+    @Transactional(readOnly = true)
+    public boolean deleteFriendRequest(Integer userId, Integer friendRequestId);
    
 }

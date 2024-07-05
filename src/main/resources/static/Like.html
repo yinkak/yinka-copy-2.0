@@ -3,12 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Profile</title>
+    <title>Personal Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/header.css" rel="stylesheet">
     <link href="/css/footer.css" rel="stylesheet">
+    <link href="/css/body.css" rel="stylesheet">
     <link href="/css/personal-account.css" rel="stylesheet">
     <style>
+        /* Custom styles for the column */
+        body {
+            background-color: #f8f9fa; /* Set the background color to white */
+            color: #343a40; /* Set text color */
+        }
+        .add-friends-column {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            /* Make sure the color scheme is matching the headers */
+            background-color: #e3effa; /* Set column background color to purple */
+            border-color: #e3effa;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px; /* Adjust width as needed */
+            height: 100%; /* Adjust height to fill viewport */
+            margin-top: 120px;
+            margin-right: 5px;
+            overflow-y: auto; /* Enable scrolling for overflow content */
+        }
+
+        .add-friends-column h4 {
+            color: #b57edc; /* Set text color to white */
+        }
+
+        .search-results {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .search-results li {
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff; /* Set text color to white */
+        }
+
+        .requested-friends {
+            margin-top: 20px;
+            background-color: #ffffff; /* Set background color to white */
+            padding: 10px;
+            border-radius: 5px;
+            color: #b57edc; /* Set text color */
+        }
+
+        .custom-lead {
+            font-size: 1.5rem;
+            color: #b57edc; /* Set text color */
+            margin-bottom: 20px; /* Add space below the welcome message */
+            text-align: left; /* Align text to the left */
+        }
+
+        .col-md-9 {
+            margin-left: -900px;
+            width: 150%;
+            margin-bottom: 1000px;
+
+        }
+
         .bottom-navigation {
             position: fixed;
             bottom: 0;
@@ -61,32 +125,28 @@
             background-color: #b57edc; /* Purple background on hover */
             color: #ffffff; /* White text color on hover */
         }
-        body{
-            background-color: #f8f9fa;
-            color: #343a40;
-        }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('#editForm');
-            form.addEventListener('submit', function(event) {
-                const confirmSave = confirm("Are you sure you want to save changes?");
-                if (!confirmSave) {
-                    event.preventDefault(); // Prevent form submission if the user cancels
-                }
-            });
-
-            const deleteAccountBtn = document.querySelector('#deleteAccountBtn');
-            deleteAccountBtn.addEventListener('click', function(event) {
-                event.preventDefault();
-                const confirmDelete = confirm("Are you sure you want to delete your account?");
-                if (confirmDelete) {
-                    window.location.href = "/delete";
-                }
-            });
-        });
-    </script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+     <script>
+         document.addEventListener('DOMContentLoaded', function() {
+             const form = document.querySelector('#editForm');
+             form.addEventListener('submit', function(event) {
+                 const confirmSave = confirm("Are you sure you want to save changes?");
+                 if (!confirmSave) {
+                     event.preventDefault(); // Prevent form submission if the user cancels
+                 }
+             });
+ 
+             const deleteAccountBtn = document.querySelector('#deleteAccountBtn');
+             deleteAccountBtn.addEventListener('click', function(event) {
+                 event.preventDefault();
+                 const confirmDelete = confirm("Are you sure you want to delete your account?");
+                 if (confirmDelete) {
+                     window.location.href = "/delete";
+                 }
+             });
+         });
+     </script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -116,55 +176,23 @@
             </div>
         </div>
     </nav>
-
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-9">
-                <div id="para">
-                    <form id="editForm" action="/editUser" method="post" th:object="${user}">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="login" th:field="*{login}" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" th:field="*{email}" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="phoneNumber" class="form-label">Phone Number</label>
-                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="location" class="form-label">Location</label>
-                            <input type="text" class="form-control" id="location" name="location" th:field="*{location}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="dob" class="form-label">Date of Birth</label>
-                            <input type="date" class="form-control" id="dob" name="dob" th:field="*{dob}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="gender" class="form-label">Gender</label>
-                            <select class="form-control" id="gender" name="gender" th:field="*{gender}">
-                                <option value="not-given">Not Given</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </form>
-                </div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="content-wrapper">
+                
             </div>
         </div>
-    </div>
-</body>
-<footer>
-    
+       
+
+
+
 <div class="bottom-navigation">
     <a href="/login">Home</a>
     <a href="./Like.html">Like</a>
     <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                aria-expanded="false">
             Settings
         </button>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
@@ -172,8 +200,8 @@
             <li><a class="dropdown-item" href="/userEditAccount">Edit Account</a></li>
         </ul>
     </div>
-    <a id="addfriends"href="#">Add Friends</a>
+    <a id="addFriendsBottomBtn" href="#">Add Friends</a>
 </div>
 
-</footer>
+</body>
 </html>

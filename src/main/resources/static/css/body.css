@@ -4,8 +4,32 @@ body, html {
     flex-direction: column;
     margin: 0;
     padding: 0;
-    background-color: #E6F2F2;
+    background-color: #f8f8ff; /* Off-white background */
     font-family: 'Arial', sans-serif;
+    overflow: hidden; /* Hide overflow to prevent scrollbars */
+    position: relative; /* Ensure relative positioning for absolute elements */
+}
+
+.background-animation {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-45deg, #b57edc, #a166c6, #b57edc, #a166c6);
+    background-size: 400% 400%;
+    animation: backgroundAnimation 15s ease infinite;
+    z-index: -1; /* Move behind other content */
+}
+
+@keyframes backgroundAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .content {
@@ -14,18 +38,21 @@ body, html {
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: #2E8B57;
+    color: #b57edc; /* Metallic purple */
     padding: 20px;
+    position: relative; /* Ensure content is above the background */
 }
 
 .content h1 {
     font-size: 3rem;
-    color: #4682B4;
+    color: #b57edc; /* Metallic purple */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.175); /* Metallic shadow */
 }
 
 .content p {
     font-size: 1.25rem;
-    color: #2E8B57;
+    color: #b57edc; /* Metallic purple */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.175); /* Metallic shadow */
     margin-bottom: 40px;
 }
 
@@ -42,38 +69,38 @@ body, html {
 }
 
 .signup {
-    background-color: #4682B4;
+    background-color: #b57edc; /* Metallic purple */
     color: white;
 }
 
 .signup:hover {
-    background-color: #2E8B57;
+    background-color: #a166c6; /* Darker purple on hover */
     transform: scale(1.05);
 }
 
 .signup-text {
     display: block;
     font-size: 1rem;
-    color: #2E8B57;
+    color: #b57edc; /* Metallic purple */
     margin-top: 2px;
     margin-bottom: 20px;
 }
 
 .login {
-    background-color: #2E8B57;
+    background-color: #a166c6; /* Darker metallic purple */
     color: white;
     margin-top: 10px;
 }
 
 .login:hover {
-    background-color: #4682B4;
+    background-color: #b57edc; /* Lighter metallic purple on hover */
     transform: scale(1.05);
 }
 
 .login-text {
     display: block;
     font-size: 1rem;
-    color: #2E8B57;
+    color: #b57edc; /* Metallic purple */
     margin-top: 2px;
     margin-bottom: 20px;
 }

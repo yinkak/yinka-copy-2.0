@@ -6,8 +6,8 @@ import java.time.temporal.ChronoUnit;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+//import jakarta.persistence.GeneratedValue;
+//import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -15,9 +15,9 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class UserPost {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //private Long id;
     private String URL;
+    //private Long id;
+    
     private String caption;
     private int likeCount;
     private int dislikeCount;
@@ -123,14 +123,8 @@ public class UserPost {
 
     @Override
     public String toString() {
-        return "Post{" +
-        "url=" + URL +
-        ", caption='" + caption + '\'' +
-        ", likeCount=" + likeCount +
-        ", dislikeCount=" + dislikeCount +
-        ", publishTime=" + publishTime +
-        ", user=" + user +
-        '}';
-        }
+        return "UserPost [URL=" + URL + ", caption=" + caption + ", likeCount=" + likeCount + ", dislikeCount="
+                + dislikeCount + ", publishTime=" + publishTime + ", user=" + user + "]";
+    }
 
 }

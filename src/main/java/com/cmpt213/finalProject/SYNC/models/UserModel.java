@@ -40,6 +40,9 @@ public class UserModel {
     })
     List<UserFriendRequestKey> friendRequests = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserPost> posts = new ArrayList<>();
+
     @Override
     public int hashCode() {
         return Objects.hash(id, login, password, email);

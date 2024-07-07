@@ -1,29 +1,38 @@
-.navbar {
-    background-color: #2E8B57;
+.navbar.navbar-expand-lg.navbar-dark.bg-dark {
+    background-color: #9370DB; /* Purple background */
     padding: 12px 24px;
 }
 
-.navbar-brand img {
+.navbar.navbar-expand-lg.navbar-dark.bg-dark .navbar-brand img {
     height: 80px;
     width: auto;
     padding: 0;
     margin: 0;
 }
 
-.navbar-nav .nav-link {
-    color: #FFFFFF;
+.navbar.navbar-expand-lg.navbar-dark.bg-dark .navbar-nav .nav-link {
+    color: #FFFFFF; /* White text */
     font-size: 18px;
     padding: 10px 20px;
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 
-.navbar-nav .nav-link:hover {
-    color: #2E8B57;
-    background-color: #FFFFFF;
+.navbar.navbar-expand-lg.navbar-dark.bg-dark .navbar-nav .nav-link:hover {
+    color: #9370DB; /* Purple text on hover */
+    background-color: #FFFFFF; /* White background on hover */
     border-radius: 5px;
 }
 
-.navbar-nav .nav-link:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+.navbar.navbar-expand-lg.navbar-dark.bg-dark .btn {
+    background-color: #9370DB; /* Purple background for buttons */
+    color: #FFFFFF; /* White text for buttons */
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px; /* Adjust margin as needed */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.navbar.navbar-expand-lg.navbar-dark.bg-dark .btn:hover {
+    background-color: #f8f8ff; /* Off-white background on hover */
+    color: #9370DB; /* Purple text on hover */
 }

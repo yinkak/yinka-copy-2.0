@@ -130,13 +130,14 @@
                     <p>Remeber this is for you and your friends and please share what you are comfortable with!</p>
                     <form id="registration-form" action="/intro" method="post"  th:object="${user}">
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="dob" name="dob" placeholder="Date of Birth">
+                            <input type="date" class="form-control" id="dob" name="dob" placeholder="Date of Birth">
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control" id="gender" name="gender" placeholder="Gender">
                         </div>
+                        <!--- TODO: use a radio for this instead of text entry--->
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone Number">
+                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required placeholder="(123)-456-7890">
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control" id="location" name="location" placeholder="Location">

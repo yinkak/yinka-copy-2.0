@@ -41,11 +41,18 @@
             color: #ffffff; /* White text color on hover */
         }
 
+        #userData th, #userData td  {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+
+
         /* Styling for dropdown button */
         .dropdown .dropdown-toggle {
             background-color: transparent !important; /* Transparent background */
             color: #b57edc !important; /* Purple text color */
             border: none; /* Remove border */
+
         }
 
         .dropdown .dropdown-toggle:hover {
@@ -65,6 +72,12 @@
             background-color: #b57edc; /* Purple background on hover */
             color: #ffffff; /* White text color on hover */
         }
+
+        #posts-label{
+            margin: 10px;
+            margin-top: 30px;
+        }
+        
     </style>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -112,6 +125,9 @@
     </nav>
     <div class="container mt-5">
         <div class="row">
+            <div class="col-md-3">
+                <img src="/logo/profile logo.png" alt="Profile Picture" class="rounded-circle" width="200" height="200">
+            </div>   
             <div class="col-md-9">
                 <div id="para">
                     <table id="userData" class="table table-bordered">
@@ -142,7 +158,25 @@
                     </table>
                 </div>
             </div>
+            <div>
+                <a href="/userEditAccount"><button class="btn btn-primary" id="edit-profile-btn">Edit Profile</button></a>
+            </div>
+            <div id="posts-label">
+                POSTS
+            </div>
+            <hr>
+            <div id="posts-table">
+                <table id="posts table" class="justify-content-center">
+                    <tr>
+                        <td><img src="/logo/logo.png" alt="Sync Logo" width = 200 height = 200></td>
+                        <td><img src="/logo/logo.png" alt="Sync Logo" width = 200 height = 200></td>
+                        <td><img src="/logo/logo.png" alt="Sync Logo" width = 200 height = 200></td>
+                    </tr>
+                </table>
+            </div>
         </div>
+       
+       
     </div>
 </body>
 <footer>

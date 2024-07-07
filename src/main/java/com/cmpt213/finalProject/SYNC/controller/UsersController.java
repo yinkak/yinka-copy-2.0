@@ -263,7 +263,7 @@ public class UsersController {
         model.addAttribute("userLogin", updatedUser.getLogin());
         model.addAttribute("user", updatedUser);
 
-        return "personalAccount";
+        return "viewProfile";
     }
 
     // THIS NEEDS TO BE FIXED FOR THE INTRO PAGE

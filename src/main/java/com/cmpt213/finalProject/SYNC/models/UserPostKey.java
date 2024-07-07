@@ -1,38 +1,39 @@
 package com.cmpt213.finalProject.SYNC.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+
 //import jakarta.persistence.GeneratedValue;
 //import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-@Entity
-public class UserPost {
-    @Id
+@Embeddable
+public class UserPostKey implements Serializable{
+    @Column(name = "user_id")
+    Integer userId;
+    
+    @Column(name = "post_id")
     private String URL;
-    //private Long id;
     
     private String caption;
     private int likeCount;
     private int dislikeCount;
     private LocalDateTime publishTime;
 
-    @ManyToOne
-    @JoinColumn(name ="user_id", nullable = false)
-
-    private User user;
 
     //default constructor
-    protected UserPost(){}
+    protected UserPostKey(){}
 
     //Constructor
-    public UserPost(String URL, String caption, User user)
+    public UserPostKey(String URL, String caption, User user)
     {
         this.URL = URL;
         this.caption = caption;

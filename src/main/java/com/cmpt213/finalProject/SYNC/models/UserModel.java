@@ -40,8 +40,13 @@ public class UserModel {
     })
     List<UserFriendRequestKey> friendRequests = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserPost> posts = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "user_posts", joinColumns = @JoinColumn(name = "user_id"))
+    @AttributeOverrides({
+        @AttributeOverride(name = "userId", column = @Column(name = "user_id", insertable = false, updatable = false)),
+        @AttributeOverride(name = "UserPostId", column = @Column(name = "post_id"))
+    })
+    List<UserFriendRequestKey> UserPosts = new ArrayList<>();
 
     @Override
     public int hashCode() {

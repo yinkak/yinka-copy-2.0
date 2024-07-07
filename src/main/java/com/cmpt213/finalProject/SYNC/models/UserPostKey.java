@@ -1,56 +1,47 @@
 package com.cmpt213.finalProject.SYNC.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+
 //import jakarta.persistence.GeneratedValue;
 //import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
-@Entity
-public class UserPost {
-    @Id
+
+@Embeddable
+public class UserPostKey implements Serializable{
+    @Column(name = "user_id")
+    Integer userId;
+    
+    @Column(name = "post_id")
     private String URL;
-    //private Long id;
     
     private String caption;
     private int likeCount;
     private int dislikeCount;
     private LocalDateTime publishTime;
 
-    @ManyToOne
-    @JoinColumn(name ="user_id", nullable = false)
-
-    private User user;
 
     //default constructor
-    protected UserPost(){}
+    protected UserPostKey(){}
 
     //Constructor
-    public UserPost(String URL, String caption, User user)
+    public UserPostKey(String URL, String caption, User user)
     {
         this.URL = URL;
         this.caption = caption;
         this.likeCount = 0;
         this.dislikeCount = 0;
         this.publishTime = LocalDateTime.now();
-        this.user = user;
     }
 
 
-    /*public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-    */
+    
 
     //getters, setters, functions
     public String getURL() {
@@ -93,15 +84,6 @@ public class UserPost {
         this.publishTime = publishTime;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-
     public String getRelativePublishTime() {
         LocalDateTime currentTime = LocalDateTime.now();
         long minutes = publishTime.until(currentTime, ChronoUnit.MINUTES);
@@ -124,7 +106,7 @@ public class UserPost {
     @Override
     public String toString() {
         return "UserPost [URL=" + URL + ", caption=" + caption + ", likeCount=" + likeCount + ", dislikeCount="
-                + dislikeCount + ", publishTime=" + publishTime + ", user=" + user + "]";
+                + dislikeCount + ", publishTime=" + publishTime + "]";
     }
 
 }

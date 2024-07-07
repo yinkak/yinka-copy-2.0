@@ -40,18 +40,10 @@ public class UserPostKey implements Serializable{
         this.likeCount = 0;
         this.dislikeCount = 0;
         this.publishTime = LocalDateTime.now();
-        this.user = user;
     }
 
 
-    /*public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-    */
+    
 
     //getters, setters, functions
     public String getURL() {
@@ -94,15 +86,6 @@ public class UserPostKey implements Serializable{
         this.publishTime = publishTime;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-
     public String getRelativePublishTime() {
         LocalDateTime currentTime = LocalDateTime.now();
         long minutes = publishTime.until(currentTime, ChronoUnit.MINUTES);
@@ -125,7 +108,7 @@ public class UserPostKey implements Serializable{
     @Override
     public String toString() {
         return "UserPost [URL=" + URL + ", caption=" + caption + ", likeCount=" + likeCount + ", dislikeCount="
-                + dislikeCount + ", publishTime=" + publishTime + ", user=" + user + "]";
+                + dislikeCount + ", publishTime=" + publishTime + "]";
     }
 
 }

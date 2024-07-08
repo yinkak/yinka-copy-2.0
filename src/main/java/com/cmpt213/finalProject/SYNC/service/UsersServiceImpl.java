@@ -3,18 +3,25 @@ package com.cmpt213.finalProject.SYNC.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cmpt213.finalProject.SYNC.models.UserModel;
+import com.cmpt213.finalProject.SYNC.models.*;
 import com.cmpt213.finalProject.SYNC.repository.UserRepository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UsersServiceImpl implements UsersService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public UserModel registerUser(String login, String password, String email, String name,  String gender, String dob, String location, String phoneNumber) {
@@ -93,6 +100,61 @@ public class UsersServiceImpl implements UsersService {
         userRepository.deleteById(userId);
     }
 
+    @Transactional(readOnly = true)
+    public UserModel findByIdWithFriendRequests(Long id) {
+        Optional<UserModel> userOpt = userRepository.findById(id);
+        if (userOpt.isPresent()) {
+            UserModel user = userOpt.get();
+            user.getFriendRequests().size(); // Force initialization
+            return user;
+        }
+        return null;
+    }
 
+    @Transactional
+    public boolean sendFriendRequest(Integer id, UserModel sessionUser) {
+        Optional<UserModel> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            UserModel user = optionalUser.get();
+            UserFriendRequestKey friendRequestKey = new UserFriendRequestKey(sessionUser.getId(), user.getId());
+            if (!sessionUser.getFriendRequests().contains(friendRequestKey)) {
+                sessionUser.getFriendRequests().add(friendRequestKey);
+                userRepository.save(sessionUser);
+                return true;
+            }
+        }
+        return false;
+    }
 
+    @Transactional
+    public boolean deleteFriendRequest(Integer userId, Integer friendRequestId) {
+        UserModel user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            UserFriendRequestKey key = new UserFriendRequestKey(userId, friendRequestId);
+            if (user.getFriendRequests().remove(key)) {
+                userRepository.save(user);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserModel> findRequestedFriends(UserModel sessionUser) {
+        List<UserFriendRequestKey> friendRequestIds = sessionUser.getFriendRequests();
+        return friendRequestIds.stream()
+                .map(key -> userRepository.findById(key.getFriendRequestId().longValue()).orElse(null))
+                .filter(user -> user != null)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public boolean hasSentFriendRequest(Integer userId, Integer friendRequestId) {
+        UserModel user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            UserFriendRequestKey key = new UserFriendRequestKey(userId, friendRequestId);
+            return user.getFriendRequests().contains(key);
+        }
+        return false;
+    }
 }

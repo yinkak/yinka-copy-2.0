@@ -1,9 +1,10 @@
 package com.cmpt213.finalProject.SYNC.controller;
 
-import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -191,6 +192,12 @@ public class UsersController {
         return response;
     }
 
+    @GetMapping("/getUsersStartingWith")
+    @ResponseBody
+    public List<UserModel> getUsersStartingWith(@RequestParam String prefix) {
+        return userRepository.findByLoginStartingWith(prefix);
+    }
+
     @GetMapping("/userEditAccount")
     public String getEditUserForm(Model model, HttpSession session) {
         UserModel sessionUser = (UserModel) session.getAttribute("session_user");
@@ -256,7 +263,7 @@ public class UsersController {
         model.addAttribute("userLogin", updatedUser.getLogin());
         model.addAttribute("user", updatedUser);
 
-        return "personalAccount";
+        return "viewProfile";
     }
 
     // THIS NEEDS TO BE FIXED FOR THE INTRO PAGE
@@ -288,7 +295,7 @@ public class UsersController {
 
     // need to implement the backend for deleting the user
     @GetMapping("/delete")
-    public String delUser(HttpSession session) {
+    public String delUser(HttpSession session, Model model) {
         UserModel sessionUser = (UserModel) session.getAttribute("session_user");
 
         if (sessionUser == null || sessionUser.getId() == null) {
@@ -302,7 +309,48 @@ public class UsersController {
         // Invalidate the session after deletion
         session.invalidate();
 
-        return "redirect:/register"; // Return the view name for the delete confirmation page
+        // Add a message to the model to be displayed on the confirmation page
+        model.addAttribute("message", "Your account has been successfully deleted.");
+
+        return "delete_confirmation"; // Return the view name for the delete confirmation page
+    }
+
+    @GetMapping("/adminlogout")
+    public String logoutAdmin(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/adminlogin";
+    }
+
+    @GetMapping("/getSendRequestFriends")
+    @ResponseBody
+    public List<Integer> sendRequestUsers(HttpSession session) {
+        UserModel sessionUser = (UserModel) session.getAttribute("session_user");
+        sessionUser = userService.findByIdWithFriendRequests(sessionUser.getId().longValue());
+        return userService.findRequestedFriends(sessionUser).stream().map(UserModel::getId)
+                .collect(Collectors.toList());
+    }
+
+    @PostMapping("/sendRequest/{id}")
+    @ResponseBody
+    public Map<String, String> sendRequest(@PathVariable Integer id, HttpSession session) {
+        UserModel sessionUser = (UserModel) session.getAttribute("session_user");
+        sessionUser = userService.findByIdWithFriendRequests(sessionUser.getId().longValue());
+        boolean requestSent = userService.sendFriendRequest(id, sessionUser);
+        Map<String, String> response = new HashMap<>();
+        if (requestSent) {
+            response.put("status", "Request Sent");
+        } else {
+            boolean requestDeleted = userService.deleteFriendRequest(sessionUser.getId(), id);
+            if (requestDeleted) {
+                response.put("status", "Request Deleted");
+            } else {
+                response.put("status", "Failed to delete request");
+            }
+        }
+        return response;
     }
 
 }

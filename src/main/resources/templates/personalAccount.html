@@ -10,6 +10,7 @@
     <link href="/css/body.css" rel="stylesheet">
     <link href="/css/personal-account.css" rel="stylesheet">
     <style>
+
         body {
             background-color: #f8f9fa;
             color: #343a40;
@@ -55,12 +56,19 @@
             display: flex;
             gap: 10px; /* Space between buttons */
             margin-left: 0; /* Align to the left border of the post box */
+
+        /* Custom styles for the column */
+        body {
+            background-color: #f8f9fa; /* Set the background color to white */
+            color: #343a40; /* Set text color */
+
         }
         .add-friends-column {
             position: fixed;
             top: 0;
             right: 0;
             bottom: 0;
+
             background-color: #e3effa;
             border-color: #e3effa;
             padding: 20px;
@@ -70,21 +78,41 @@
             margin-top: 120px;
             margin-right: 5px;
             overflow-y: auto;
+
+            /* Make sure the color scheme is matching the headers */
+            background-color: #e3effa; /* Set column background color to purple */
+            border-color: #e3effa;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px; /* Adjust width as needed */
+            height: 100%; /* Adjust height to fill viewport */
+            margin-top: 120px;
+            margin-right: 5px;
+            overflow-y: auto; /* Enable scrolling for overflow content */
+
         }
+
         .add-friends-column h4 {
+
             color: #b57edc;
         }
+
+            color: #b57edc; /* Set text color to white */
+        }
+
         .search-results {
             list-style-type: none;
             padding: 0;
             margin: 0;
         }
+
         .search-results li {
             padding: 5px;
             border-bottom: 1px solid #ddd;
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             color: #ffffff;
         }
         .requested-friends {
@@ -98,11 +126,38 @@
             margin-left: 320px;
             margin-right: 320px;
         }
+
+            color: #ffffff; /* Set text color to white */
+        }
+
+        .requested-friends {
+            margin-top: 20px;
+            background-color: #ffffff; /* Set background color to white */
+            padding: 10px;
+            border-radius: 5px;
+            color: #b57edc; /* Set text color */
+        }
+
+        .custom-lead {
+            font-size: 1.5rem;
+            color: #b57edc; /* Set text color */
+            margin-bottom: 20px; /* Add space below the welcome message */
+            text-align: left; /* Align text to the left */
+        }
+
+        .col-md-9 {
+            margin-left: -900px;
+            width: 150%;
+            margin-bottom: 1000px;
+
+        }
+
         .bottom-navigation {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
+
             background-color: #ffffff;
             display: flex;
             justify-content: space-around;
@@ -141,6 +196,53 @@
         .dropdown-menu .dropdown-item:hover {
             background-color: #b57edc;
             color: #ffffff;
+
+            background-color: #ffffff; /* White background */
+            display: flex;
+            justify-content: space-around; /* Evenly space items */
+            align-items: center;
+            height: 60px; /* Adjust height as needed */
+            box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+            z-index: 1000; /* Ensure it's above other content */
+        }
+
+        .bottom-navigation a {
+            text-decoration: none;
+            color: #b57edc; /* Purple text color */
+            display: block;
+            text-align: center;
+            line-height: 60px; /* Vertically center text */
+            width: 25%; /* Each button takes up 1/4 of the width */
+        }
+
+        .bottom-navigation a:hover {
+            background-color: #b57edc; /* Purple background on hover */
+            color: #ffffff; /* White text color on hover */
+        }
+
+        /* Styling for dropdown button */
+        .dropdown .dropdown-toggle {
+            background-color: transparent !important; /* Transparent background */
+            color: #b57edc !important; /* Purple text color */
+            border: none; /* Remove border */
+        }
+
+        .dropdown .dropdown-toggle:hover {
+            background-color: #b57edc !important; /* Purple background on hover */
+            color: #ffffff !important; /* White text color on hover */
+        }
+
+        .dropdown-menu {
+            min-width: auto !important; /* Adjust dropdown width */
+        }
+
+        .dropdown-menu .dropdown-item {
+            color: #b57edc; /* Purple text color */
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #b57edc; /* Purple background on hover */
+            color: #ffffff; /* White text color on hover */
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -284,6 +386,7 @@
 
 <div class="container mt-5">
     <div class="row">
+
         <div class="col-md-3">
             <div class="scrollable-box">
                 <h4>Posts</h4>
@@ -380,10 +483,23 @@
             </div>
         </div>
         <div class="col-md-6 offset-md-3">
+
+        <div class="col-md-9">
+            <div class="content-wrapper">
+                <div class="welcome-user">
+                    <p class="custom-lead">Welcome <span th:text="${userLogin}"></span> !</p>
+                </div>
+                <!-- Your existing content here -->
+                <div class="requested-friends"></div> <!-- Container to display requested friends -->
+            </div>
+        </div>
+        <div class="col-md-3">
+
             <!-- Placeholder div for scrollable content -->
             <div class="add-friends-column">
                 <h4>Add Friends</h4>
                 <input type="text" class="form-control" placeholder="Enter username">
+
                 <ul class="search-results"></ul>
             </div>
         </div>
@@ -397,6 +513,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="addFriendsModalLabel">Friend Requests</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
             </div>
             <div class="modal-body">
                 <!-- Content to display friend requests -->
@@ -409,6 +526,20 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
+
+            </div>
+            <div class="modal-body">
+                <!-- Content to display friend requests -->
+                <ul class="list-group">
+                    <li class="list-group-item">User 1 - Accept/Decline</li>
+                    <li class="list-group-item">User 2 - Accept/Decline</li>
+                    <!-- Replace with dynamic content as per your backend response -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+
         </div>
     </div>
 </div>
@@ -425,7 +556,11 @@
             <li><a class="dropdown-item" href="/userEditAccount">Edit Account</a></li>
         </ul>
     </div>
+
     <a id="addfriends" href="#">Add Friends</a>
+
+    <a id="addfriends"href="#">Add Friends</a>
+
 </div>
 
 </body>

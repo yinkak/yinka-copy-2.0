@@ -1,10 +1,8 @@
 package com.cmpt213.finalProject.SYNC.models;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-
-
-
 import jakarta.persistence.*;
 
 @Entity
@@ -26,6 +24,29 @@ public class UserModel {
     String pictureUpload; // do not need
     String phoneNumber; 
     
+    @ElementCollection
+    @CollectionTable(name = "user_friends", joinColumns = @JoinColumn(name = "user_id"))
+    @AttributeOverrides({
+        @AttributeOverride(name = "userId", column = @Column(name = "user_id", insertable = false, updatable = false)),
+        @AttributeOverride(name = "friendId", column = @Column(name = "friend_id"))
+    })
+    List<UserFriendKey> friends = new ArrayList<>();
+    
+    @ElementCollection
+    @CollectionTable(name = "user_friend_requests", joinColumns = @JoinColumn(name = "user_id"))
+    @AttributeOverrides({
+        @AttributeOverride(name = "userId", column = @Column(name = "user_id", insertable = false, updatable = false)),
+        @AttributeOverride(name = "friendRequestId", column = @Column(name = "friend_request_id"))
+    })
+    List<UserFriendRequestKey> friendRequests = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "user_posts", joinColumns = @JoinColumn(name = "user_id"))
+    @AttributeOverrides({
+        @AttributeOverride(name = "userId", column = @Column(name = "user_id", insertable = false, updatable = false)),
+        @AttributeOverride(name = "UserPostId", column = @Column(name = "post_id"))
+    })
+    List<UserFriendRequestKey> UserPosts = new ArrayList<>();
 
     @Override
     public int hashCode() {
@@ -128,7 +149,6 @@ public class UserModel {
         this.gender = gender;
     }
 
-
     public String getLocation() {
         return location;
     }
@@ -137,6 +157,13 @@ public class UserModel {
         this.location = location;
     }
 
+    public List<UserFriendRequestKey> getFriendRequests() {
+        return friendRequests;
+    }
+
+    public void setFriendRequests(List<UserFriendRequestKey> friendRequests) {
+        this.friendRequests = friendRequests;
+    }
 
     public String getDob() {
         return dob;

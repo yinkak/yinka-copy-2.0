@@ -23,6 +23,8 @@ public class UserModel {
     String location; 
     String pictureUpload; // do not need
     String phoneNumber; 
+    String Bio;
+    
     
     @ElementCollection
     @CollectionTable(name = "user_friends", joinColumns = @JoinColumn(name = "user_id"))
@@ -180,6 +182,15 @@ public class UserModel {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public String getBio() {
+        return Bio;
+    }
+
+    public void setBio(String bio) {
+        Bio = bio;
+    }
+
 
     public static String hashFunc(String password) {
         // Step 1: Mirror the password

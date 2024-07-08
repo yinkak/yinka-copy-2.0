@@ -112,6 +112,28 @@
             margin-right: 50px;
         }
 
+        .btn-primary {
+            background-color: #b57edc;
+            border-color: #b57edc;
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+        }
+
+        .btn-primary:hover {
+            background-color: #8d21db;
+            border-color: #8d21db;
+        }
+
+        .list-group {
+        list-style-type: none; /* Remove default list-style */
+        padding-left: 0; /* Remove default padding-left */
+        }
+
+        .list-group-item {
+        text-align: left; /* Align text to the left */
+        }
+
     </style>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -161,11 +183,53 @@
     <div class="content-wrapper">
     <div class="container mt-5">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3" >
                 <img src="/logo/profile logo.png" alt="Profile Picture" class="rounded-circle" id="profileviewpic" width="200" height="200">
-            </div>   
-            
-            <div class="col-md-9">
+            </div>
+            <div>
+                <ul>
+                    <li class="list-group-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
+                          </svg>
+                        <span><a class="link-unstyled" th:href="'mailto:' + ${user.email}" th:text="${user.email}"></a></span>
+                    </li>
+                    <li class="list-group-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                          </svg>
+                          <span th:text=${user.location}></span>
+                    </li>
+                    <li class="list-group-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <!-- Define SVG path for male icon -->
+                            <path th:if="${user.gender == 'male'}" d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8"/>
+                            
+                            <!-- Define SVG path for female icon -->
+                            <path th:if="${user.gender == 'female'}" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8M3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5"/>
+                            
+                            <!-- Define SVG path for other gender icon -->
+                            <path th:if="${user.gender != 'male' && user.gender != 'female'}" d="M11.5 1a.5.5 0 0 1 0-1h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V1.707l-3.45 3.45A4 4 0 0 1 8.5 10.97V13H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V14H6a.5.5 0 0 1 0-1h1.5v-2.03a4 4 0 1 1 3.471-6.648L14.293 1zm-.997 4.346a3 3 0 1 0-5.006 3.309 3 3 0 0 0 5.006-3.31z"/>
+                        </svg>
+                        <span th:text="${user.gender}"></span>
+                    </li>
+                    
+
+                    <!---<li class="list-group-item" th:text=${user.gender}></li>--->
+                </ul>
+                <div class="col-md-3">
+                    <a href="/userEditAccount">
+                        <button class="btn btn-primary" id="edit-profile-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil me-1" viewBox="0 0 16 16">
+                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                          </svg>
+                        <span>Edit Profile</span>
+                    </button>
+                    </a>
+                </div>
+            </div>
+            <!--<div class="col-md-9">
                 <div id="para">
                     <table id="userData" class="table table-bordered">
                         <tr>
@@ -194,10 +258,8 @@
                         </tr>
                     </table>
                 </div>
-            </div>
-            <div>
-                <a href="/userEditAccount"><button class="btn btn-primary" id="edit-profile-btn">Edit Profile</button></a>
-            </div>
+            </div>--->
+            
             <div class="posts-label">
                 POSTS
             </div>

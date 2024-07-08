@@ -23,7 +23,6 @@ public class UserModel {
     String location; 
     String pictureUpload; // do not need
     String phoneNumber; 
-    String Bio;
     
     
     @ElementCollection
@@ -183,14 +182,7 @@ public class UserModel {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getBio() {
-        return Bio;
-    }
-
-    public void setBio(String bio) {
-        Bio = bio;
-    }
-
+    
 
     public static String hashFunc(String password) {
         // Step 1: Mirror the password

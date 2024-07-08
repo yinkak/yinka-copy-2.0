@@ -10,16 +10,75 @@
     <link href="/css/body.css" rel="stylesheet">
     <link href="/css/personal-account.css" rel="stylesheet">
     <style>
+
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .scrollable-box {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            padding: 20px;
+            width: calc(100% - 360px); /* Adjust width to fill most of the remaining space */
+            height: calc(100vh - 60px); /* Full height of the viewport minus some margin */
+            overflow-y: auto;
+            background-color: #e3effa;
+            border-radius: 10px;
+            margin-top: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center posts horizontally */
+        }
+        .scrollable-box h4 {
+            color: #b57edc;
+        }
+        .post-item img {
+            width: 75%; /* Adjusted for 25% reduction */
+            height: auto;
+            border-radius: 3.75px; /* Adjusted for 25% reduction */
+        }
+        .post-item {
+            width: 75%; /* Adjusted for 25% reduction */
+            text-align: left;
+            margin-bottom: 20px; /* Space between posts */
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .username, .caption {
+            display: block;
+            text-align: left;
+            margin-left: 0; /* Align to the left border of the post box */
+        }
+        .btn-container {
+            display: flex;
+            gap: 10px; /* Space between buttons */
+            margin-left: 0; /* Align to the left border of the post box */
+
         /* Custom styles for the column */
         body {
             background-color: #f8f9fa; /* Set the background color to white */
             color: #343a40; /* Set text color */
+
         }
         .add-friends-column {
             position: fixed;
             top: 0;
             right: 0;
             bottom: 0;
+
+            background-color: #e3effa;
+            border-color: #e3effa;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            height: 100%;
+            margin-top: 120px;
+            margin-right: 5px;
+            overflow-y: auto;
+
             /* Make sure the color scheme is matching the headers */
             background-color: #e3effa; /* Set column background color to purple */
             border-color: #e3effa;
@@ -30,9 +89,14 @@
             margin-top: 120px;
             margin-right: 5px;
             overflow-y: auto; /* Enable scrolling for overflow content */
+
         }
 
         .add-friends-column h4 {
+
+            color: #b57edc;
+        }
+
             color: #b57edc; /* Set text color to white */
         }
 
@@ -48,6 +112,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+
+            color: #ffffff;
+        }
+        .requested-friends {
+            margin-top: 20px;
+            background-color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            color: #b57edc;
+        }
+        .content-wrapper {
+            margin-left: 320px;
+            margin-right: 320px;
+        }
+
             color: #ffffff; /* Set text color to white */
         }
 
@@ -78,6 +157,46 @@
             bottom: 0;
             left: 0;
             width: 100%;
+
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 60px;
+            box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        .bottom-navigation a {
+            text-decoration: none;
+            color: #b57edc;
+            display: block;
+            text-align: center;
+            line-height: 60px;
+            width: 25%;
+        }
+        .bottom-navigation a:hover {
+            background-color: #b57edc;
+            color: #ffffff;
+        }
+        .dropdown .dropdown-toggle {
+            background-color: transparent !important;
+            color: #b57edc !important;
+            border: none;
+        }
+        .dropdown .dropdown-toggle:hover {
+            background-color: #b57edc !important;
+            color: #ffffff !important;
+        }
+        .dropdown-menu {
+            min-width: auto !important;
+        }
+        .dropdown-menu .dropdown-item {
+            color: #b57edc;
+        }
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #b57edc;
+            color: #ffffff;
+
             background-color: #ffffff; /* White background */
             display: flex;
             justify-content: space-around; /* Evenly space items */
@@ -267,6 +386,104 @@
 
 <div class="container mt-5">
     <div class="row">
+
+        <div class="col-md-3">
+            <div class="scrollable-box">
+                <h4>Posts</h4>
+                <div class="post-item">
+                    <p class="username">User 1</p>
+                    <img src="https://via.placeholder.com/300" alt="Post Image 1">
+                    <p class="caption">Caption for post 1</p>
+                    <div class="btn-container">
+                        <button class="btn btn-primary btn-sm">Like</button>
+                        <button class="btn btn-secondary btn-sm">Dislike</button>
+                    </div>
+                </div>
+                <div class="post-item">
+                    <p class="username">User 2</p>
+                    <img src="https://via.placeholder.com/300" alt="Post Image 2">
+                    <p class="caption">Caption for post 2</p>
+                    <div class="btn-container">
+                        <button class="btn btn-primary btn-sm">Like</button>
+                        <button class="btn btn-secondary btn-sm">Dislike</button>
+                    </div>
+                </div>
+                <div class="post-item">
+                    <p class="username">User 3</p>
+                    <img src="https://via.placeholder.com/300" alt="Post Image 3">
+                    <p class="caption">Caption for post 3</p>
+                    <div class="btn-container">
+                        <button class="btn btn-primary btn-sm">Like</button>
+                        <button class="btn btn-secondary btn-sm">Dislike</button>
+                    </div>
+                </div>
+                <div class="post-item">
+                    <p class="username">User 4</p>
+                    <img src="https://via.placeholder.com/300" alt="Post Image 4">
+                    <p class="caption">Caption for post 4</p>
+                    <div class="btn-container">
+                        <button class="btn btn-primary btn-sm">Like</button>
+                        <button class="btn btn-secondary btn-sm">Dislike</button>
+                    </div>
+                </div>
+                <div class="post-item">
+                    <p class="username">User 5</p>
+                    <img src="https://via.placeholder.com/300" alt="Post Image 5">
+                    <p class="caption">Caption for post 5</p>
+                    <div class="btn-container">
+                        <button class="btn btn-primary btn-sm">Like</button>
+                        <button class="btn btn-secondary btn-sm">Dislike</button>
+                    </div>
+                </div>
+                <div class="post-item">
+                    <p class="username">User 6</p>
+                    <img src="https://via.placeholder.com/300" alt="Post Image 6">
+                    <p class="caption">Caption for post 6</p>
+                    <div class="btn-container">
+                        <button class="btn btn-primary btn-sm">Like</button>
+                        <button class="btn btn-secondary btn-sm">Dislike</button>
+                    </div>
+                </div>
+                <div class="post-item">
+                    <p class="username">User 7</p>
+                    <img src="https://via.placeholder.com/300" alt="Post Image 7">
+                    <p class="caption">Caption for post 7</p>
+                    <div class="btn-container">
+                        <button class="btn btn-primary btn-sm">Like</button>
+                        <button class="btn btn-secondary btn-sm">Dislike</button>
+                    </div>
+                </div>
+                <div class="post-item">
+                    <p class="username">User 8</p>
+                    <img src="https://via.placeholder.com/300" alt="Post Image 8">
+                    <p class="caption">Caption for post 8</p>
+                    <div class="btn-container">
+                        <button class="btn btn-primary btn-sm">Like</button>
+                        <button class="btn btn-secondary btn-sm">Dislike</button>
+                    </div>
+                </div>
+                <div class="post-item">
+                    <p class="username">User 9</p>
+                    <img src="https://via.placeholder.com/300" alt="Post Image 9">
+                    <p class="caption">Caption for post 9</p>
+                    <div class="btn-container">
+                        <button class="btn btn-primary btn-sm">Like</button>
+                        <button class="btn btn-secondary btn-sm">Dislike</button>
+                    </div>
+                </div>
+                <div class="post-item">
+                    <p class="username">User 10</p>
+                    <img src="https://via.placeholder.com/300" alt="Post Image 10">
+                    <p class="caption">Caption for post 10</p>
+                    <div class="btn-container">
+                        <button class="btn btn-primary btn-sm">Like</button>
+                        <button class="btn btn-secondary btn-sm">Dislike</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 offset-md-3">
+
         <div class="col-md-9">
             <div class="content-wrapper">
                 <div class="welcome-user">
@@ -277,11 +494,11 @@
             </div>
         </div>
         <div class="col-md-3">
+
             <!-- Placeholder div for scrollable content -->
             <div class="add-friends-column">
                 <h4>Add Friends</h4>
                 <input type="text" class="form-control" placeholder="Enter username">
-                
 
                 <ul class="search-results"></ul>
             </div>
@@ -296,6 +513,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="addFriendsModalLabel">Friend Requests</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
             </div>
             <div class="modal-body">
                 <!-- Content to display friend requests -->
@@ -308,6 +526,20 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
+
+            </div>
+            <div class="modal-body">
+                <!-- Content to display friend requests -->
+                <ul class="list-group">
+                    <li class="list-group-item">User 1 - Accept/Decline</li>
+                    <li class="list-group-item">User 2 - Accept/Decline</li>
+                    <!-- Replace with dynamic content as per your backend response -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+
         </div>
     </div>
 </div>
@@ -324,7 +556,11 @@
             <li><a class="dropdown-item" href="/userEditAccount">Edit Account</a></li>
         </ul>
     </div>
+
+    <a id="addfriends" href="#">Add Friends</a>
+
     <a id="addfriends"href="#">Add Friends</a>
+
 </div>
 
 </body>

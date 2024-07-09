@@ -24,6 +24,7 @@ public class UserModel {
     String pictureUpload; // do not need
     String phoneNumber; 
     
+    
     @ElementCollection
     @CollectionTable(name = "user_friends", joinColumns = @JoinColumn(name = "user_id"))
     @AttributeOverrides({
@@ -180,6 +181,8 @@ public class UserModel {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    
 
     public static String hashFunc(String password) {
         // Step 1: Mirror the password

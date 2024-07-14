@@ -4,52 +4,42 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
-//import jakarta.persistence.GeneratedValue;
-//import jakarta.persistence.GenerationType;
-
-
 @Embeddable
-public class UserPostKey implements Serializable{
+public class UserPostKey implements Serializable {
     @Column(name = "user_id")
     Integer userId;
-    
+
     @Column(name = "post_id")
     private String URL;
-    
+
     private String caption;
     private int likeCount;
     private int dislikeCount;
     private LocalDateTime publishTime;
 
+    // Default constructor
+    protected UserPostKey() {}
 
-    //default constructor
-    protected UserPostKey(){}
-
-    //Constructor
-    public UserPostKey(String URL, String caption, User user)
-    {
+    // Constructor
+    public UserPostKey(String URL, String caption, Integer userId) {
         this.URL = URL;
         this.caption = caption;
         this.likeCount = 0;
         this.dislikeCount = 0;
         this.publishTime = LocalDateTime.now();
+        this.userId = userId;
     }
 
-
-    
-
-    //getters, setters, functions
+    // Getters, setters, functions
     public String getURL() {
         return URL;
     }
 
-    public void setURL(String uRL) {
-        URL = uRL;
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 
     public String getCaption() {
@@ -108,5 +98,4 @@ public class UserPostKey implements Serializable{
         return "UserPost [URL=" + URL + ", caption=" + caption + ", likeCount=" + likeCount + ", dislikeCount="
                 + dislikeCount + ", publishTime=" + publishTime + "]";
     }
-
 }

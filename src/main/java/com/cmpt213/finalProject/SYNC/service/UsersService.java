@@ -15,15 +15,30 @@ public interface UsersService {
     void deactivateUser(Integer id);
     void activateUser(Integer id);
     UserModel updateUser(String login, String dob, String gender, String phoneNumber, String location);
-    public void deleteUserById(Integer userId);
+    // public void deleteUserById(Integer userId);
     public UserModel findByIdWithFriendRequests(Long id);
     @Transactional
     public boolean sendFriendRequest(Integer id, UserModel sessionUser);
 
-    @Transactional
-    public List<UserModel> findRequestedFriends(UserModel sessionUser);
+    @Transactional(readOnly = true)
+    public List<Integer> findRequestedFriendIds(UserModel sessionUser);
 
     @Transactional(readOnly = true)
     public boolean deleteFriendRequest(Integer userId, Integer friendRequestId);
-   
+    @Transactional
+    public void deleteUserByIdAndRemoveFromFriends(Integer userId);
+
+    @Transactional(readOnly = true)
+    public List<UserModel> findAllUsersStartingWithExcludingFriends(String prefix, Integer sessionUserId);
+
+    @Transactional(readOnly = true)
+    public List<UserModel> findAllUsersExcludingSessionUser(Integer sessionUserId);
+
+    @Transactional
+    public boolean declineFriendRequest(Integer userId, Integer friendRequestId);
+    @Transactional
+    public boolean acceptFriendRequest(Integer userId, Integer friendRequestId);
+
+    @Transactional(readOnly = true)
+    public List<UserModel> findGotFriendRequests(UserModel sessionUser);
 }

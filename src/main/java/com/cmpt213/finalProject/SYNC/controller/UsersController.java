@@ -349,8 +349,8 @@ public class UsersController {
             response.put("status", "Request Sent");
         } else {
             boolean requestDeleted = userService.deleteFriendRequest(sessionUser.getId(), id);
-            boolean reqdeleted = userService.deleteFriendRequest(id, sessionUser.getId());
-            if (requestDeleted && reqdeleted) {
+            // boolean reqdeleted = userService.deleteFriendRequest(id, sessionUser.getId());
+            if (requestDeleted) {
                 response.put("status", "Request Deleted");
             } else {
                 response.put("status", "Failed to delete request");

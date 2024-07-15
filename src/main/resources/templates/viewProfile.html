@@ -220,9 +220,9 @@
             <div class="d-flex flex-wrap justify-content-start">
                 <div id="posts-table" class="d-flex flex-wrap">
                     <div th:each="post : ${userPosts}" class="p-2">
-                        <img th:src="${post.URL}" class="rounded float-start" alt="Post Image" width="200" height="200">
+                        <img th:src="${post.url}" class="rounded float-start" alt="Post Image" width="200" height="200">
                         <p th:text="${post.caption}"></p>
-                        <p>Likes: <span th:text="${post.likeCount}"></span> | Dislikes: <span th:text="${post.dislikeCount}"></span></p>
+                        <p>Likes: <span th:text="${post.likes.size()}"></span> | Dislikes: <span th:text="${post.dislikes.size()}"></span></p>
                         <p th:text="${post.getRelativePublishTime()}"></p>
                     </div>
                 </div>

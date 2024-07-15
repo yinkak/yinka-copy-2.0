@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmpt213.finalProject.SYNC.models.UserModel;
-import com.cmpt213.finalProject.SYNC.models.UserPostKey;
+import com.cmpt213.finalProject.SYNC.models.UserPost;
 import com.cmpt213.finalProject.SYNC.repository.UserRepository;
 import com.cmpt213.finalProject.SYNC.service.PostService;
 import com.cmpt213.finalProject.SYNC.service.UsersService;
@@ -34,7 +34,7 @@ public class UsersController {
 
     @Autowired
     private UsersService userService;
-    
+
     @Autowired
     private PostService postService;
 
@@ -241,7 +241,7 @@ public class UsersController {
         }
 
         // Fetch user posts
-        List<UserPostKey> userPosts = postService.getUserPosts(user.getId());
+        List<UserPost> userPosts = postService.getUserPosts(user.getId());
 
         model.addAttribute("user", user);
         model.addAttribute("userPosts", userPosts);

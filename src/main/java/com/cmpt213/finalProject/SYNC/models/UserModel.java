@@ -47,13 +47,9 @@ public class UserModel {
     })
     List<UserFriendRequestKey> gotFriendRequests = new ArrayList<>();
 
-    @ElementCollection
-    @CollectionTable(name = "user_posts", joinColumns = @JoinColumn(name = "user_id"))
-    @AttributeOverrides({
-        @AttributeOverride(name = "userId", column = @Column(name = "user_id", insertable = false, updatable = false)),
-        @AttributeOverride(name = "UserPostId", column = @Column(name = "post_id"))
-    })
-    List<UserPostKey> userPosts = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
+    private List<UserPost> userPosts = new ArrayList<>();
 
     // Getters and Setters
 
@@ -169,11 +165,11 @@ public class UserModel {
         this.gotFriendRequests = gotFriendRequests;
     }
 
-    public List<UserPostKey> getUserPosts() {
+    public List<UserPost> getUserPosts() {
         return userPosts;
     }
 
-    public void setUserPosts(List<UserPostKey> userPosts) {
+    public void setUserPosts(List<UserPost> userPosts) {
         this.userPosts = userPosts;
     }
 

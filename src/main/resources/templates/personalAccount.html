@@ -34,12 +34,12 @@
             color: #b57edc;
         }
         .post-item img {
-            width: 75%;
+            width: 100%;
             height: auto;
             border-radius: 3.75px;
         }
         .post-item {
-            width: 75%;
+            width: 100%;
             text-align: left;
             margin-bottom: 20px;
             background-color: #fff;
@@ -152,38 +152,73 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function fetchFriendPosts() {
+        $.ajax({
+            url: '/api/friendPosts',
+            method: 'GET',
+            success: function(posts) {
+                const postContainer = document.querySelector('.scrollable-box');
+                postContainer.innerHTML = '';
+                if (posts.length === 0) {
+                    postContainer.innerHTML = '<p>No recent posts from friends.</p>';
+                } else {
+                    posts.forEach(post => {
+                        const postItem = document.createElement('div');
+                        postItem.classList.add('post-item');
+                        console.log(post.likes.length);
+                        postItem.innerHTML = `
+                            <p class="username">${post.userId}</p>
+                            <img src="${post.url}" alt="Post Image">
+                            <p class="caption">${post.caption}</p>
+                            <div class="btn-container">
+                                <button class="btn btn-primary btn-sm" onclick="likePost(${post.id})">Like</button>
+                                <p>${post.likes.length}</p>
+                                <button class="btn btn-secondary btn-sm" onclick="dislikePost(${post.id})">Dislike</button>
+                                <p>${post.dislikes.length}</p>
 
-document.addEventListener('DOMContentLoaded', function() {
-            const postContainer = document.querySelector('.scrollable-box');
-            fetch('/api/friendPosts')
-                .then(response => response.json())
-                .then(posts => {
-                    if (posts.length === 0) {
-                        postContainer.innerHTML = '<p>No recent posts from friends.</p>';
-                    } else {
-                        const postGrid = document.createElement('div');
-                        postGrid.className = 'post-grid';
-                        posts.forEach(post => {
-                            const postItem = document.createElement('div');
-                            postItem.className = 'post-item';
-                            postItem.innerHTML = `
-                                <p class="username">${post.username}</p>
-                                <img src="${post.url}" alt="Post Image">
-                                <p class="caption">${post.caption}</p>
-                                <p>${new Date(post.publishTime).toLocaleString()}</p>
-                                <div class="btn-container">
-                                    <button class="btn btn-primary btn-sm">Like</button>
-                                    <button class="btn btn-secondary btn-sm">Dislike</button>
-                                </div>
-                            `;
-                            postGrid.appendChild(postItem);
-                        });
-                        postContainer.appendChild(postGrid);
-                    }
-                })
-                .catch(error => {
-                    postContainer.innerHTML = '<p>Error loading posts.</p>';
-                });
+                            </div>
+                        `;
+                        postContainer.appendChild(postItem);
+                    });
+                }
+            },
+            error: function() {
+                alert('Error fetching posts.');
+            }
+        });
+    }
+
+            function likePost(postId) {
+        $.ajax({
+            url: `/api/posts/${postId}/like`,
+            method: 'POST',
+            success: function() {
+                fetchFriendPosts();
+            },
+            error: function() {
+                alert('Error liking post.');
+            }
+        });
+    }
+
+            function dislikePost(postId) {
+        $.ajax({
+            url: `/api/posts/${postId}/dislike`,
+            method: 'POST',
+            success: function() {
+                fetchFriendPosts();
+            },
+            error: function() {
+                alert('Error disliking post.');
+            }
+        });
+    }
+
+            window.likePost = likePost;
+            window.dislikePost = dislikePost;
+
+            fetchFriendPosts();
 
             const searchInput = document.querySelector('.add-friends-column input');
             const resultsList = document.querySelector('.search-results');

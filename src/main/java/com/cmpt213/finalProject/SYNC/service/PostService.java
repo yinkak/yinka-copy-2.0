@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cmpt213.finalProject.SYNC.models.UserModel;
-import com.cmpt213.finalProject.SYNC.models.UserPostKey;
+import com.cmpt213.finalProject.SYNC.models.UserPost;
+import com.cmpt213.finalProject.SYNC.repository.UserPostRepository;
 import com.cmpt213.finalProject.SYNC.repository.UserRepository;
 
 @Service
@@ -21,23 +22,26 @@ public class PostService {
     @Autowired
     private ImgurService imgurService;
 
-    public UserPostKey addPost(Integer userId, String caption, MultipartFile image) {
+    @Autowired
+    private UserPostRepository userPostRepository;
+
+    public UserPost addPost(Integer userId, String caption, MultipartFile image) {
         UserModel user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
         String imageUrl = imgurService.uploadImage(image);
-        UserPostKey post = new UserPostKey(imageUrl, caption, user.getId());
+        UserPost post = new UserPost(imageUrl, caption, user.getId());
         user.getUserPosts().add(post);
         userRepository.save(user);
 
         return post;
     }
 
-    public List<UserPostKey> getUserPosts(Integer userId) {
+    public List<UserPost> getUserPosts(Integer userId) {
         UserModel user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         return user.getUserPosts();
     }
 
-    public List<UserPostKey> getRecentFriendPosts(Integer userId) {
+    public List<UserPost> getRecentFriendPosts(Integer userId) {
         UserModel user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         List<Integer> friendIds = user.getFriends().stream().map(f -> f.getFriendId()).collect(Collectors.toList());
 
@@ -49,4 +53,29 @@ public class PostService {
                 .sorted((p1, p2) -> p2.getPublishTime().compareTo(p1.getPublishTime()))
                 .collect(Collectors.toList());
     }
+
+    public UserPost findPostById(Integer postId) {
+        return userPostRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+    }
+
+    public void savePost(UserPost post) {
+        userPostRepository.save(post);
+    }
+
+    public void likePost(Integer userId, Integer postId) {
+        UserPost post = findPostById(postId);
+        System.out.println("Before liking: " + post.getLikes().size());
+        post.addLike(userId);
+        savePost(post);
+        System.out.println("After liking: " + post.getLikes().size());
+    }
+    
+    public void dislikePost(Integer userId, Integer postId) {
+        UserPost post = findPostById(postId);
+        System.out.println("Before disliking: " + post.getDislikes().size());
+        post.addDislike(userId);
+        savePost(post);
+        System.out.println("After disliking: " + post.getDislikes().size());
+    }
+    
 }

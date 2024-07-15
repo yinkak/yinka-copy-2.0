@@ -9,7 +9,7 @@
     <link href="/css/footer.css" rel="stylesheet">
     <link href="/css/personal-account.css" rel="stylesheet">
     <style>
-        body{
+        body {
             background-color: #f8f9fa;
             color: #343a40;
         }
@@ -18,100 +18,81 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background-color: #ffffff; /* White background */
+            background-color: #ffffff;
             display: flex;
-            justify-content: space-around; /* Evenly space items */
+            justify-content: space-around;
             align-items: center;
-            height: 60px; /* Adjust height as needed */
-            box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
-            z-index: 1000; /* Ensure it's above other content */
+            height: 60px;
+            box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
         }
-
         .bottom-navigation a {
             text-decoration: none;
-            color: #b57edc; /* Purple text color */
+            color: #b57edc;
             display: block;
             text-align: center;
-            line-height: 60px; /* Vertically center text */
-            width: 25%; /* Each button takes up 1/4 of the width */
+            line-height: 60px;
+            width: 25%;
         }
-
         .bottom-navigation a:hover {
-            background-color: #b57edc; /* Purple background on hover */
-            color: #ffffff; /* White text color on hover */
+            background-color: #b57edc;
+            color: #ffffff;
         }
-
-        #userData th, #userData td  {
+        #userData th, #userData td {
             padding: 10px;
             border: 1px solid #ddd;
             text-align: left;
-
         }
-        /* Styling for dropdown button */
         .dropdown .dropdown-toggle {
-            background-color: transparent !important; /* Transparent background */
-            color: #b57edc !important; /* Purple text color */
-            border: none; /* Remove border */
-
+            background-color: transparent !important;
+            color: #b57edc !important;
+            border: none;
         }
-
         .dropdown .dropdown-toggle:hover {
-            background-color: #b57edc !important; /* Purple background on hover */
-            color: #ffffff !important; /* White text color on hover */
+            background-color: #b57edc !important;
+            color: #ffffff !important;
         }
-
         .dropdown-menu {
-            min-width: auto !important; /* Adjust dropdown width */
+            min-width: auto !important;
         }
-
         .dropdown-menu .dropdown-item {
-            color: #b57edc; /* Purple text color */
+            color: #b57edc;
         }
-
         .dropdown-menu .dropdown-item:hover {
-            background-color: #b57edc; /* Purple background on hover */
-            color: #ffffff; /* White text color on hover */
+            background-color: #b57edc;
+            color: #ffffff;
         }
-
         .posts-label {
             margin: 20px;
             color: #b57edc;
             margin-top: 30px;
         }
-
         .content-wrapper {
-            background-color: #f8f9fa; /* Match body background color */
-            padding-bottom: 60px; /* Space for the footer */
+            background-color: #f8f9fa;
+            padding-bottom: 60px;
         }
-
         .container {
-            padding-bottom: 60px; /* Ensure content doesn't overlap with footer */
+            padding-bottom: 60px;
         }
-
         #posts-table {
             display: flex;
             justify-content: center;
             align-items: center;
             margin-top: 20px;
         }
-        
         #posts-table td {
             padding: 10px;
             border: 1px solid #ddd;
             text-align: center;
             transition: background-color 0.3s ease;
         }
-
         #posts-table td:hover {
-            background-color: #f0f0f0; /* Light gray background on hover */
-            cursor: pointer; /* Change cursor to pointer on hover */
+            background-color: #f0f0f0;
+            cursor: pointer;
         }
-
-        #profileviewpic
-        {
+        #profileviewpic {
             margin-right: 50px;
         }
-
         .btn-primary {
             background-color: #b57edc;
             border-color: #b57edc;
@@ -119,21 +100,21 @@
             padding: 0.5rem 1rem;
             font-size: 1rem;
         }
-
         .btn-primary:hover {
             background-color: #8d21db;
             border-color: #8d21db;
         }
-
         .list-group {
-        list-style-type: none; /* Remove default list-style */
-        padding-left: 0; /* Remove default padding-left */
+            list-style-type: none;
+            padding-left: 0;
         }
-
         .list-group-item {
-        text-align: left; /* Align text to the left */
+            text-align: left;
         }
-
+        .btn-container {
+            display: flex;
+            gap: 10px;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -142,7 +123,7 @@
             form.addEventListener('submit', function(event) {
                 const confirmSave = confirm("Are you sure you want to save changes?");
                 if (!confirmSave) {
-                    event.preventDefault(); // Prevent form submission if the user cancels
+                    event.preventDefault();
                 }
             });
 
@@ -181,111 +162,82 @@
     </nav>
 
     <div class="content-wrapper">
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-3" >
-                <img src="/logo/profile logo.png" alt="Profile Picture" class="rounded-circle" id="profileviewpic" width="200" height="200">
-            </div>
-            <div>
-                <ul>
-                    <li class="list-group-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
-                          </svg>
-                        <span><a class="link-unstyled" th:href="'mailto:' + ${user.email}" th:text="${user.email}"></a></span>
-                    </li>
-                    <li class="list-group-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
-                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
-                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                          </svg>
-                          <span th:text=${user.location}></span>
-                    </li>
-                    <li class="list-group-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <!-- Define SVG path for male icon -->
-                            <path th:if="${user.gender == 'male'}" d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8"/>
-                            
-                            <!-- Define SVG path for female icon -->
-                            <path th:if="${user.gender == 'female'}" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8M3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5"/>
-                            
-                            <!-- Define SVG path for other gender icon -->
-                            <path th:if="${user.gender != 'male' && user.gender != 'female'}" d="M11.5 1a.5.5 0 0 1 0-1h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V1.707l-3.45 3.45A4 4 0 0 1 8.5 10.97V13H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V14H6a.5.5 0 0 1 0-1h1.5v-2.03a4 4 0 1 1 3.471-6.648L14.293 1zm-.997 4.346a3 3 0 1 0-5.006 3.309 3 3 0 0 0 5.006-3.31z"/>
-                        </svg>
-                        <span th:text="${user.gender}"></span>
-                    </li>
-                    
-
-                    <!---<li class="list-group-item" th:text=${user.gender}></li>--->
-                </ul>
+        <div class="container mt-5">
+            <div class="row">
                 <div class="col-md-3">
-                    <a href="/userEditAccount">
-                        <button class="btn btn-primary" id="edit-profile-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil me-1" viewBox="0 0 16 16">
-                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-                          </svg>
-                        <span>Edit Profile</span>
-                    </button>
-                    </a>
+                    <img src="/logo/profile logo.png" alt="Profile Picture" class="rounded-circle" id="profileviewpic" width="200" height="200">
+                </div>
+                <div>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
+                            </svg>
+                            <span><a class="link-unstyled" th:href="'mailto:' + ${user.email}" th:text="${user.email}"></a></span>
+                        </li>
+                        <li class="list-group-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                            </svg>
+                            <span th:text=${user.location}></span>
+                        </li>
+                        <li class="list-group-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path th:if="${user.gender == 'male'}" d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8"/>
+                                <path th:if="${user.gender == 'female'}" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8M3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13H6a.5.5 0 0 1 0-1h1.5v-2.03a5 5 0 0 1 5-5"/>
+                                <path th:if="${user.gender != 'male' && user.gender != 'female'}" d="M11.5 1a.5.5 0 0 1 0-1h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V1.707l-3.45 3.45A4 4 0 0 1 8.5 10.97V13H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V14H6a.5.5 0 0 1 0-1h1.5v-2.03a4 4 0 1 1 3.471-6.648L14.293 1zm-.997 4.346a3 3 0 1 0-5.006 3.309 3 3 0 0 0 5.006-3.31z"/>
+                            </svg>
+                            <span th:text="${user.gender}"></span>
+                        </li>
+                    </ul>
+                    <div class="btn-container mt-3">
+                        <a href="/userEditAccount">
+                            <button class="btn btn-primary" id="edit-profile-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil me-1" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                </svg>
+                                <span>Edit Profile</span>
+                            </button>
+                        </a>
+                        <a href="/addpost">
+                            <button class="btn btn-primary" id="add-post-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus me-1" viewBox="0 0 16 16">
+                                    <path d="M8 1a.5.5 0 0 1 .5.5v6h6a.5.5 0 0 1 0 1h-6v6a.5.5 0 0 1-1 0v-6h-6a.5.5 0 0 1 0-1h6v-6A.5.5 0 0 1 8 1z"/>
+                                </svg>
+                                <span>Add Post</span>
+                            </button>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <!--<div class="col-md-9">
-                <div id="para">
-                    <table id="userData" class="table table-bordered">
-                        <tr>
-                            <th>Username</th>
-                            <td th:text="${user.login}"></td>
-                        </tr>
-                        <tr>
-                            <th>Email</th>
-                            <td th:text="${user.email}"></td>
-                        </tr>
-                        <tr>
-                            <th>Phone Number</th>
-                            <td th:text="${user.phoneNumber}"></td>
-                        </tr>
-                        <tr>
-                            <th>Location</th>
-                            <td th:text="${user.location}"></td>
-                        </tr>
-                        <tr>
-                            <th>Date of Birth</th>
-                            <td th:text="${user.dob}"></td>
-                        </tr>
-                        <tr>
-                            <th>Gender</th>
-                            <td th:text="${user.gender}"></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>--->
-            
+
             <div class="posts-label">
                 POSTS
             </div>
             <hr>
-            <div id="posts-table">
-                <table id="posts table" class="justify-content-center">
-                    <tr>
-                        <td><img src="/logo/logo.png" alt="Sync Logo" width = 200 height = 200></td>
-                        <td><img src="/logo/logo.png" alt="Sync Logo" width = 200 height = 200></td>
-                        <td><img src="/logo/logo.png" alt="Sync Logo" width = 200 height = 200></td>
-                    </tr>
-                </table>
+
+            <div class="d-flex flex-wrap justify-content-start">
+                <div id="posts-table" class="d-flex flex-wrap">
+                    <div th:each="post : ${userPosts}" class="p-2">
+                        <img th:src="${post.url}" class="rounded float-start" alt="Post Image" width="200" height="200">
+                        <p th:text="${post.caption}"></p>
+                        <p>Likes: <span th:text="${post.likes.size()}"></span> | Dislikes: <span th:text="${post.dislikes.size()}"></span></p>
+                        <p th:text="${post.getRelativePublishTime()}"></p>
+                    </div>
+                </div>
             </div>
+        
         </div>
-       
-       
     </div>
-    </div>
-</body>
+</div>
+
 <footer>
     <div class="bottom-navigation">
         <a href="/login">Home</a>
         <a href="./Like.html">Like</a>
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                    aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 Settings
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
@@ -296,5 +248,5 @@
         <a id="addFriendsBottomBtn" href="#">Add Friends</a>
     </div>
 </footer>
-
+</body>
 </html>

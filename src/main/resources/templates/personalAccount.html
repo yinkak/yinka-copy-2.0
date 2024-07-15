@@ -10,7 +10,6 @@
     <link href="/css/body.css" rel="stylesheet">
     <link href="/css/personal-account.css" rel="stylesheet">
     <style>
-
         body {
             background-color: #f8f9fa;
             color: #343a40;
@@ -21,28 +20,28 @@
             bottom: 0;
             left: 0;
             padding: 20px;
-            width: calc(100% - 360px); /* Adjust width to fill most of the remaining space */
-            height: calc(100vh - 60px); /* Full height of the viewport minus some margin */
+            width: calc(100% - 360px);
+            height: calc(100vh - 60px);
             overflow-y: auto;
             background-color: #e3effa;
             border-radius: 10px;
             margin-top: 120px;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Center posts horizontally */
+            align-items: center;
         }
         .scrollable-box h4 {
             color: #b57edc;
         }
         .post-item img {
-            width: 75%; /* Adjusted for 25% reduction */
+            width: 100%;
             height: auto;
-            border-radius: 3.75px; /* Adjusted for 25% reduction */
+            border-radius: 3.75px;
         }
         .post-item {
-            width: 75%; /* Adjusted for 25% reduction */
+            width: 100%;
             text-align: left;
-            margin-bottom: 20px; /* Space between posts */
+            margin-bottom: 20px;
             background-color: #fff;
             padding: 10px;
             border-radius: 10px;
@@ -50,25 +49,18 @@
         .username, .caption {
             display: block;
             text-align: left;
-            margin-left: 0; /* Align to the left border of the post box */
+            margin-left: 0;
         }
         .btn-container {
             display: flex;
-            gap: 10px; /* Space between buttons */
-            margin-left: 0; /* Align to the left border of the post box */
-
-        /* Custom styles for the column */
-        body {
-            background-color: #f8f9fa; /* Set the background color to white */
-            color: #343a40; /* Set text color */
-
+            gap: 10px;
+            margin-left: 0;
         }
         .add-friends-column {
             position: fixed;
             top: 0;
             right: 0;
             bottom: 0;
-
             background-color: #e3effa;
             border-color: #e3effa;
             padding: 20px;
@@ -78,41 +70,21 @@
             margin-top: 120px;
             margin-right: 5px;
             overflow-y: auto;
-
-            /* Make sure the color scheme is matching the headers */
-            background-color: #e3effa; /* Set column background color to purple */
-            border-color: #e3effa;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px; /* Adjust width as needed */
-            height: 100%; /* Adjust height to fill viewport */
-            margin-top: 120px;
-            margin-right: 5px;
-            overflow-y: auto; /* Enable scrolling for overflow content */
-
         }
-
         .add-friends-column h4 {
-
             color: #b57edc;
         }
-
-            color: #b57edc; /* Set text color to white */
-        }
-
         .search-results {
             list-style-type: none;
             padding: 0;
             margin: 0;
         }
-
         .search-results li {
             padding: 5px;
             border-bottom: 1px solid #ddd;
             display: flex;
             justify-content: space-between;
             align-items: center;
-
             color: #ffffff;
         }
         .requested-friends {
@@ -126,38 +98,17 @@
             margin-left: 320px;
             margin-right: 320px;
         }
-
-            color: #ffffff; /* Set text color to white */
-        }
-
-        .requested-friends {
-            margin-top: 20px;
-            background-color: #ffffff; /* Set background color to white */
-            padding: 10px;
-            border-radius: 5px;
-            color: #b57edc; /* Set text color */
-        }
-
         .custom-lead {
             font-size: 1.5rem;
-            color: #b57edc; /* Set text color */
-            margin-bottom: 20px; /* Add space below the welcome message */
-            text-align: left; /* Align text to the left */
+            color: #b57edc;
+            margin-bottom: 20px;
+            text-align: left;
         }
-
-        .col-md-9 {
-            margin-left: -900px;
-            width: 150%;
-            margin-bottom: 1000px;
-
-        }
-
         .bottom-navigation {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-
             background-color: #ffffff;
             display: flex;
             justify-content: space-around;
@@ -196,59 +147,79 @@
         .dropdown-menu .dropdown-item:hover {
             background-color: #b57edc;
             color: #ffffff;
-
-            background-color: #ffffff; /* White background */
-            display: flex;
-            justify-content: space-around; /* Evenly space items */
-            align-items: center;
-            height: 60px; /* Adjust height as needed */
-            box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
-            z-index: 1000; /* Ensure it's above other content */
-        }
-
-        .bottom-navigation a {
-            text-decoration: none;
-            color: #b57edc; /* Purple text color */
-            display: block;
-            text-align: center;
-            line-height: 60px; /* Vertically center text */
-            width: 25%; /* Each button takes up 1/4 of the width */
-        }
-
-        .bottom-navigation a:hover {
-            background-color: #b57edc; /* Purple background on hover */
-            color: #ffffff; /* White text color on hover */
-        }
-
-        /* Styling for dropdown button */
-        .dropdown .dropdown-toggle {
-            background-color: transparent !important; /* Transparent background */
-            color: #b57edc !important; /* Purple text color */
-            border: none; /* Remove border */
-        }
-
-        .dropdown .dropdown-toggle:hover {
-            background-color: #b57edc !important; /* Purple background on hover */
-            color: #ffffff !important; /* White text color on hover */
-        }
-
-        .dropdown-menu {
-            min-width: auto !important; /* Adjust dropdown width */
-        }
-
-        .dropdown-menu .dropdown-item {
-            color: #b57edc; /* Purple text color */
-        }
-
-        .dropdown-menu .dropdown-item:hover {
-            background-color: #b57edc; /* Purple background on hover */
-            color: #ffffff; /* White text color on hover */
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            function fetchFriendPosts() {
+        $.ajax({
+            url: '/api/friendPosts',
+            method: 'GET',
+            success: function(posts) {
+                const postContainer = document.querySelector('.scrollable-box');
+                postContainer.innerHTML = '';
+                if (posts.length === 0) {
+                    postContainer.innerHTML = '<p>No recent posts from friends.</p>';
+                } else {
+                    posts.forEach(post => {
+                        const postItem = document.createElement('div');
+                        postItem.classList.add('post-item');
+                        console.log(post.likes.length);
+                        postItem.innerHTML = `
+                            <p class="username">${post.userId}</p>
+                            <img src="${post.url}" alt="Post Image">
+                            <p class="caption">${post.caption}</p>
+                            <div class="btn-container">
+                                <button class="btn btn-primary btn-sm" onclick="likePost(${post.id})">Like</button>
+                                <p>${post.likes.length}</p>
+                                <button class="btn btn-secondary btn-sm" onclick="dislikePost(${post.id})">Dislike</button>
+                                <p>${post.dislikes.length}</p>
+
+                            </div>
+                        `;
+                        postContainer.appendChild(postItem);
+                    });
+                }
+            },
+            error: function() {
+                alert('Error fetching posts.');
+            }
+        });
+    }
+
+            function likePost(postId) {
+        $.ajax({
+            url: `/api/posts/${postId}/like`,
+            method: 'POST',
+            success: function() {
+                fetchFriendPosts();
+            },
+            error: function() {
+                alert('Error liking post.');
+            }
+        });
+    }
+
+            function dislikePost(postId) {
+        $.ajax({
+            url: `/api/posts/${postId}/dislike`,
+            method: 'POST',
+            success: function() {
+                fetchFriendPosts();
+            },
+            error: function() {
+                alert('Error disliking post.');
+            }
+        });
+    }
+
+            window.likePost = likePost;
+            window.dislikePost = dislikePost;
+
+            fetchFriendPosts();
+
             const searchInput = document.querySelector('.add-friends-column input');
             const resultsList = document.querySelector('.search-results');
             const requestedFriendsContainer = document.querySelector('.requested-friends');
@@ -351,7 +322,74 @@
             addFriendsBtn.addEventListener('click', function(event) {
                 event.preventDefault();
                 $('#addFriendsModal').modal('show'); // Show the modal
+                fetchFriendRequests();
             });
+
+            // Fetch and display friend requests in the modal
+            function fetchFriendRequests() {
+                $.ajax({
+                    url: '/getFriendRequests',
+                    method: 'GET',
+                    success: function(response) {
+                        const friendRequestsList = document.querySelector('#friendRequestsList');
+                        friendRequestsList.innerHTML = ''; // Clear previous requests
+                        response.forEach(user => {
+                            const listItem = document.createElement('li');
+                            listItem.classList.add('list-group-item');
+                            listItem.innerHTML = `
+                                ${user.login}
+                                <button class="btn btn-success btn-sm accept-request-btn" data-id="${user.id}">Accept</button>
+                                <button class="btn btn-warning btn-sm decline-request-btn" data-id="${user.id}">Decline</button>
+                            `;
+                            friendRequestsList.appendChild(listItem);
+                        });
+
+                        // Add click event listeners to the new buttons
+                        document.querySelectorAll('.accept-request-btn').forEach(button => {
+                            button.addEventListener('click', function() {
+                                const userId = this.getAttribute('data-id');
+                                $.ajax({
+                                    url: `/acceptRequest/${userId}`,
+                                    method: 'POST',
+                                    success: function(response) {
+                                        if (response.status === 'Request Accepted') {
+                                            button.parentElement.remove(); // Remove the list item on success
+                                        } else {
+                                            alert(response.status);
+                                        }
+                                    },
+                                    error: function() {
+                                        alert('Error accepting friend request.');
+                                    }
+                                });
+                            });
+                        });
+
+                        document.querySelectorAll('.decline-request-btn').forEach(button => {
+                            button.addEventListener('click', function() {
+                                const userId = this.getAttribute('data-id');
+                                $.ajax({
+                                    url: `/declineRequest/${userId}`,
+                                    method: 'POST',
+                                    success: function(response) {
+                                        if (response.status === 'Request Declined') {
+                                            button.parentElement.remove(); // Remove the list item on success
+                                        } else {
+                                            alert(response.status);
+                                        }
+                                    },
+                                    error: function() {
+                                        alert('Error declining friend request.');
+                                    }
+                                });
+                            });
+                        });
+                    },
+                    error: function() {
+                        alert('Error fetching friend requests.');
+                    }
+                });
+            }
         });
     </script>
 </head>
@@ -386,160 +424,44 @@
 
 <div class="container mt-5">
     <div class="row">
-
         <div class="col-md-3">
             <div class="scrollable-box">
-                <h4>Posts</h4>
-                <div class="post-item">
-                    <p class="username">User 1</p>
-                    <img src="https://via.placeholder.com/300" alt="Post Image 1">
-                    <p class="caption">Caption for post 1</p>
-                    <div class="btn-container">
-                        <button class="btn btn-primary btn-sm">Like</button>
-                        <button class="btn btn-secondary btn-sm">Dislike</button>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <p class="username">User 2</p>
-                    <img src="https://via.placeholder.com/300" alt="Post Image 2">
-                    <p class="caption">Caption for post 2</p>
-                    <div class="btn-container">
-                        <button class="btn btn-primary btn-sm">Like</button>
-                        <button class="btn btn-secondary btn-sm">Dislike</button>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <p class="username">User 3</p>
-                    <img src="https://via.placeholder.com/300" alt="Post Image 3">
-                    <p class="caption">Caption for post 3</p>
-                    <div class="btn-container">
-                        <button class="btn btn-primary btn-sm">Like</button>
-                        <button class="btn btn-secondary btn-sm">Dislike</button>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <p class="username">User 4</p>
-                    <img src="https://via.placeholder.com/300" alt="Post Image 4">
-                    <p class="caption">Caption for post 4</p>
-                    <div class="btn-container">
-                        <button class="btn btn-primary btn-sm">Like</button>
-                        <button class="btn btn-secondary btn-sm">Dislike</button>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <p class="username">User 5</p>
-                    <img src="https://via.placeholder.com/300" alt="Post Image 5">
-                    <p class="caption">Caption for post 5</p>
-                    <div class="btn-container">
-                        <button class="btn btn-primary btn-sm">Like</button>
-                        <button class="btn btn-secondary btn-sm">Dislike</button>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <p class="username">User 6</p>
-                    <img src="https://via.placeholder.com/300" alt="Post Image 6">
-                    <p class="caption">Caption for post 6</p>
-                    <div class="btn-container">
-                        <button class="btn btn-primary btn-sm">Like</button>
-                        <button class="btn btn-secondary btn-sm">Dislike</button>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <p class="username">User 7</p>
-                    <img src="https://via.placeholder.com/300" alt="Post Image 7">
-                    <p class="caption">Caption for post 7</p>
-                    <div class="btn-container">
-                        <button class="btn btn-primary btn-sm">Like</button>
-                        <button class="btn btn-secondary btn-sm">Dislike</button>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <p class="username">User 8</p>
-                    <img src="https://via.placeholder.com/300" alt="Post Image 8">
-                    <p class="caption">Caption for post 8</p>
-                    <div class="btn-container">
-                        <button class="btn btn-primary btn-sm">Like</button>
-                        <button class="btn btn-secondary btn-sm">Dislike</button>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <p class="username">User 9</p>
-                    <img src="https://via.placeholder.com/300" alt="Post Image 9">
-                    <p class="caption">Caption for post 9</p>
-                    <div class="btn-container">
-                        <button class="btn btn-primary btn-sm">Like</button>
-                        <button class="btn btn-secondary btn-sm">Dislike</button>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <p class="username">User 10</p>
-                    <img src="https://via.placeholder.com/300" alt="Post Image 10">
-                    <p class="caption">Caption for post 10</p>
-                    <div class="btn-container">
-                        <button class="btn btn-primary btn-sm">Like</button>
-                        <button class="btn btn-secondary btn-sm">Dislike</button>
-                    </div>
-                </div>
+                
             </div>
         </div>
         <div class="col-md-6 offset-md-3">
-
-        <div class="col-md-9">
             <div class="content-wrapper">
                 <div class="welcome-user">
                     <p class="custom-lead">Welcome <span th:text="${userLogin}"></span> !</p>
                 </div>
-                <!-- Your existing content here -->
-                <div class="requested-friends"></div> <!-- Container to display requested friends -->
+                <div class="requested-friends"></div>
             </div>
         </div>
         <div class="col-md-3">
-
-            <!-- Placeholder div for scrollable content -->
             <div class="add-friends-column">
                 <h4>Add Friends</h4>
                 <input type="text" class="form-control" placeholder="Enter username">
-
                 <ul class="search-results"></ul>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal -->
 <div class="modal fade" id="addFriendsModal" tabindex="-1" aria-labelledby="addFriendsModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addFriendsModalLabel">Friend Requests</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
             </div>
             <div class="modal-body">
-                <!-- Content to display friend requests -->
-                <ul class="list-group">
-                    <li class="list-group-item">User 1 - Accept/Decline</li>
-                    <li class="list-group-item">User 2 - Accept/Decline</li>
-                    <!-- Replace with dynamic content as per your backend response -->
+                <ul id="friendRequestsList" class="list-group">
+                    <!-- Dynamic content will be inserted here -->
                 </ul>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
-
-            </div>
-            <div class="modal-body">
-                <!-- Content to display friend requests -->
-                <ul class="list-group">
-                    <li class="list-group-item">User 1 - Accept/Decline</li>
-                    <li class="list-group-item">User 2 - Accept/Decline</li>
-                    <!-- Replace with dynamic content as per your backend response -->
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-
         </div>
     </div>
 </div>
@@ -556,12 +478,7 @@
             <li><a class="dropdown-item" href="/userEditAccount">Edit Account</a></li>
         </ul>
     </div>
-
     <a id="addfriends" href="#">Add Friends</a>
-
-    <a id="addfriends"href="#">Add Friends</a>
-
 </div>
-
 </body>
 </html>

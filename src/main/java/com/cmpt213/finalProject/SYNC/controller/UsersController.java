@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmpt213.finalProject.SYNC.models.UserModel;
+import com.cmpt213.finalProject.SYNC.models.UserPost;
 import com.cmpt213.finalProject.SYNC.repository.UserRepository;
+import com.cmpt213.finalProject.SYNC.service.PostService;
 import com.cmpt213.finalProject.SYNC.service.UsersService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,11 +28,15 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class UsersController {
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private UsersService userService;
+
+    @Autowired
+    private PostService postService;
 
     @GetMapping("/")
     public String getHomePage() {
@@ -53,7 +59,6 @@ public class UsersController {
             model.addAttribute("userLogin", user.getLogin());
             return "personalAccount";
         }
-
     }
 
     @PostMapping("/register")
@@ -61,19 +66,15 @@ public class UsersController {
             HttpSession session) {
         System.out.println("register request: " + userModel);
 
-        // Hash the password using your custom hash function
         String hashedPassword = UserModel.hashFunc(userModel.getPassword());
 
-        // Set the hashed password in the userModel
         userModel.setPassword(hashedPassword);
 
-        // Hard code gender to be null
         userModel.setGender("not-given");
         userModel.setDob("");
         userModel.setLocation("not-given");
         userModel.setPhoneNumber("");
 
-        // Use the hashed password and null gender in the registration
         UserModel registeredUser = userService.registerUser(userModel.getLogin(), userModel.getPassword(),
                 userModel.getEmail(), userModel.getName(), userModel.getGender(), userModel.getDob(),
                 userModel.getLocation(), userModel.getPhoneNumber());
@@ -120,7 +121,6 @@ public class UsersController {
         } else {
             return "redirect:/admin/home";
         }
-
     }
 
     @PostMapping("/adminlogin")
@@ -153,7 +153,6 @@ public class UsersController {
 
         model.addAttribute("allUsers", userService.getAllUsers());
         return "admin_dashboard";
-
     }
 
     @GetMapping("/intro")
@@ -192,10 +191,21 @@ public class UsersController {
         return response;
     }
 
+    @GetMapping("/getUsersExcludingSession")
+    @ResponseBody
+    public List<UserModel> getUsersExcludingSession(HttpSession session) {
+        UserModel sessionUser = (UserModel) session.getAttribute("session_user");
+        return userService.findAllUsersExcludingSessionUser(sessionUser.getId());
+    }
+
     @GetMapping("/getUsersStartingWith")
     @ResponseBody
-    public List<UserModel> getUsersStartingWith(@RequestParam String prefix) {
-        return userRepository.findByLoginStartingWith(prefix);
+    public List<UserModel> getUsersStartingWith(@RequestParam String prefix, HttpSession session) {
+        UserModel sessionUser = (UserModel) session.getAttribute("session_user");
+        if (sessionUser == null) {
+            return List.of();
+        }
+        return userService.findAllUsersStartingWithExcludingFriends(prefix, sessionUser.getId());
     }
 
     @GetMapping("/userEditAccount")
@@ -203,24 +213,20 @@ public class UsersController {
         UserModel sessionUser = (UserModel) session.getAttribute("session_user");
 
         if (sessionUser == null || sessionUser.getId() == null) {
-            // If no user is in session or ID is null, redirect to login
             return "redirect:/login";
         }
 
-        // Find the user from the database using the ID from the session
         Optional<UserModel> optionalUser = userRepository.findById(sessionUser.getId());
         if (!optionalUser.isPresent()) {
-            // If user is not found in the database, redirect to login or an error page
             return "redirect:/login";
         }
 
         UserModel user = optionalUser.get();
-        // Add the user to the model to pre-fill the form
         model.addAttribute("user", user);
-        return "editUser"; // Return the view name for the edit user form
+        return "editUser";
     }
 
-    @GetMapping("/seeProfile")
+     @GetMapping("/seeProfile")
     public String seeProfile(Model model, HttpSession session) {
         UserModel sessionUser = (UserModel) session.getAttribute("session_user");
 
@@ -229,31 +235,33 @@ public class UsersController {
         }
 
         // Find the user from the database using the ID from the session
-        Optional<UserModel> optionalUser = userRepository.findById(sessionUser.getId());
-        if (!optionalUser.isPresent()) {
+        UserModel user = userService.findByIdWithFriendRequests(sessionUser.getId().longValue());
+        if (user == null) {
             return "redirect:/login";
         }
 
-        UserModel user = optionalUser.get();
+        // Fetch user posts
+        List<UserPost> userPosts = postService.getUserPosts(user.getId());
+
         model.addAttribute("user", user);
+        model.addAttribute("userPosts", userPosts);
         return "viewProfile";
     }
+
 
     @PostMapping("/editUser")
     public String editUser(@ModelAttribute UserModel userModel, Model model, HttpSession session) {
         UserModel sessionUser = (UserModel) session.getAttribute("session_user");
 
         if (sessionUser == null) {
-            // If no user is in session, redirect to login
             return "redirect:/login";
         }
         System.out.println(userModel.getGender());
-        // Update the user with additional information
+
         UserModel updatedUser = userService.updateUser(sessionUser.getLogin(), userModel.getDob(),
                 userModel.getGender(), userModel.getPhoneNumber(), userModel.getLocation());
 
         if (updatedUser == null) {
-            // Handle case where the user could not be updated
             model.addAttribute("error", "Failed to update user information.");
             return "editUser";
         }
@@ -266,8 +274,6 @@ public class UsersController {
         return "viewProfile";
     }
 
-    // THIS NEEDS TO BE FIXED FOR THE INTRO PAGE
-    // DATA HANDLING FOR ADDITIONAL INFO
     @PostMapping("/intro")
     public String getAdditionalInfo(@ModelAttribute UserModel userModel, Model model, HttpSession session) {
         UserModel sessionUser = (UserModel) session.getAttribute("session_user");
@@ -293,26 +299,21 @@ public class UsersController {
         return "personalAccount";
     }
 
-    // need to implement the backend for deleting the user
     @GetMapping("/delete")
     public String delUser(HttpSession session, Model model) {
         UserModel sessionUser = (UserModel) session.getAttribute("session_user");
 
         if (sessionUser == null || sessionUser.getId() == null) {
-            // If no user is in session or ID is null, redirect to login
             return "redirect:/login";
         }
 
-        // Delete the user from the database
-        userService.deleteUserById(sessionUser.getId());
+        userService.deleteUserByIdAndRemoveFromFriends(sessionUser.getId());
 
-        // Invalidate the session after deletion
         session.invalidate();
 
-        // Add a message to the model to be displayed on the confirmation page
         model.addAttribute("message", "Your account has been successfully deleted.");
 
-        return "delete_confirmation"; // Return the view name for the delete confirmation page
+        return "delete_confirmation";
     }
 
     @GetMapping("/adminlogout")
@@ -329,22 +330,27 @@ public class UsersController {
     public List<Integer> sendRequestUsers(HttpSession session) {
         UserModel sessionUser = (UserModel) session.getAttribute("session_user");
         sessionUser = userService.findByIdWithFriendRequests(sessionUser.getId().longValue());
-        return userService.findRequestedFriends(sessionUser).stream().map(UserModel::getId)
-                .collect(Collectors.toList());
+        return userService.findRequestedFriendIds(sessionUser);
     }
 
     @PostMapping("/sendRequest/{id}")
     @ResponseBody
     public Map<String, String> sendRequest(@PathVariable Integer id, HttpSession session) {
         UserModel sessionUser = (UserModel) session.getAttribute("session_user");
+
         sessionUser = userService.findByIdWithFriendRequests(sessionUser.getId().longValue());
+        UserModel requser = userService.findByIdWithFriendRequests(id.longValue());
+
         boolean requestSent = userService.sendFriendRequest(id, sessionUser);
+        boolean reqsent = userService.sendFriendRequest(sessionUser.getId(), requser);
+
         Map<String, String> response = new HashMap<>();
-        if (requestSent) {
+        if (requestSent && reqsent) {
             response.put("status", "Request Sent");
         } else {
             boolean requestDeleted = userService.deleteFriendRequest(sessionUser.getId(), id);
-            if (requestDeleted) {
+            boolean reqdeleted = userService.deleteFriendRequest(id, sessionUser.getId());
+            if (requestDeleted && reqdeleted) {
                 response.put("status", "Request Deleted");
             } else {
                 response.put("status", "Failed to delete request");
@@ -353,4 +359,41 @@ public class UsersController {
         return response;
     }
 
+    @PostMapping("/acceptRequest/{id}")
+    @ResponseBody
+    public Map<String, String> acceptRequest(@PathVariable Integer id, HttpSession session) {
+
+        UserModel sessionUser = (UserModel) session.getAttribute("session_user");
+        System.out.println("\n\n\n\n" + id + "   \n\n" + sessionUser.getId() + "\n\n\n");
+        boolean requestAccepted = userService.acceptFriendRequest(sessionUser.getId(), id);
+        Map<String, String> response = new HashMap<>();
+        if (requestAccepted) {
+            response.put("status", "Request Accepted");
+        } else {
+            response.put("status", "Failed to accept request");
+        }
+        return response;
+    }
+
+    @PostMapping("/declineRequest/{id}")
+    @ResponseBody
+    public Map<String, String> declineRequest(@PathVariable Integer id, HttpSession session) {
+        UserModel sessionUser = (UserModel) session.getAttribute("session_user");
+        boolean requestDeclined = userService.declineFriendRequest(sessionUser.getId(), id);
+        Map<String, String> response = new HashMap<>();
+        if (requestDeclined) {
+            response.put("status", "Request Declined");
+        } else {
+            response.put("status", "Failed to decline request");
+        }
+        return response;
+    }
+
+    @GetMapping("/getFriendRequests")
+    @ResponseBody
+    public List<UserModel> getFriendRequests(HttpSession session) {
+        UserModel sessionUser = (UserModel) session.getAttribute("session_user");
+        sessionUser = userService.findByIdWithFriendRequests(sessionUser.getId().longValue());
+        return userService.findGotFriendRequests(sessionUser);
+    }
 }

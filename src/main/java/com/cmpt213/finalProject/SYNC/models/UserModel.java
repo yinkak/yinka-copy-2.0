@@ -8,23 +8,21 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "users_table")
 public class UserModel {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    String login; //username
+    String login; // username
     String password;
     String email;
     String name;
     boolean isAdmin;
     boolean isActive = true;
-    String gender; 
+    String gender;
     String dob;
-    String location; 
-    String pictureUpload; // do not need
-    String phoneNumber; 
-    
-    
+    String location;
+    String phoneNumber;
+
     @ElementCollection
     @CollectionTable(name = "user_friends", joinColumns = @JoinColumn(name = "user_id"))
     @AttributeOverrides({
@@ -32,7 +30,7 @@ public class UserModel {
         @AttributeOverride(name = "friendId", column = @Column(name = "friend_id"))
     })
     List<UserFriendKey> friends = new ArrayList<>();
-    
+
     @ElementCollection
     @CollectionTable(name = "user_friend_requests", joinColumns = @JoinColumn(name = "user_id"))
     @AttributeOverrides({
@@ -42,49 +40,18 @@ public class UserModel {
     List<UserFriendRequestKey> friendRequests = new ArrayList<>();
 
     @ElementCollection
-    @CollectionTable(name = "user_posts", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "got_friend_requests", joinColumns = @JoinColumn(name = "user_id"))
     @AttributeOverrides({
         @AttributeOverride(name = "userId", column = @Column(name = "user_id", insertable = false, updatable = false)),
-        @AttributeOverride(name = "UserPostId", column = @Column(name = "post_id"))
+        @AttributeOverride(name = "friendRequestId", column = @Column(name = "friend_request_id"))
     })
-    List<UserFriendRequestKey> UserPosts = new ArrayList<>();
+    List<UserFriendRequestKey> gotFriendRequests = new ArrayList<>();
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, login, password, email);
-    }
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
+    private List<UserPost> userPosts = new ArrayList<>();
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        UserModel other = (UserModel) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        if (login == null) {
-            if (other.login != null)
-                return false;
-        } else if (!login.equals(other.login))
-            return false;
-        if (password == null) {
-            if (other.password != null)
-                return false;
-        } else if (!password.equals(other.password))
-            return false;
-        if (email == null) {
-            if (other.email != null)
-                return false;
-        } else if (!email.equals(other.email))
-            return false;
-        return true;
-    }
+    // Getters and Setters
 
     public Integer getId() {
         return id;
@@ -117,7 +84,7 @@ public class UserModel {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -141,29 +108,13 @@ public class UserModel {
     public void setActive(boolean isActive) {
         this.isActive = isActive;
     }
-    
+
     public String getGender() {
         return gender;
     }
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public List<UserFriendRequestKey> getFriendRequests() {
-        return friendRequests;
-    }
-
-    public void setFriendRequests(List<UserFriendRequestKey> friendRequests) {
-        this.friendRequests = friendRequests;
     }
 
     public String getDob() {
@@ -174,6 +125,14 @@ public class UserModel {
         this.dob = dob;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -182,7 +141,42 @@ public class UserModel {
         this.phoneNumber = phoneNumber;
     }
 
-    
+    public List<UserFriendKey> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<UserFriendKey> friends) {
+        this.friends = friends;
+    }
+
+    public List<UserFriendRequestKey> getFriendRequests() {
+        return friendRequests;
+    }
+
+    public void setFriendRequests(List<UserFriendRequestKey> friendRequests) {
+        this.friendRequests = friendRequests;
+    }
+
+    public List<UserFriendRequestKey> getGotFriendRequests() {
+        return gotFriendRequests;
+    }
+
+    public void setGotFriendRequests(List<UserFriendRequestKey> gotFriendRequests) {
+        this.gotFriendRequests = gotFriendRequests;
+    }
+
+    public List<UserPost> getUserPosts() {
+        return userPosts;
+    }
+
+    public void setUserPosts(List<UserPost> userPosts) {
+        this.userPosts = userPosts;
+    }
+
+    @Override
+    public String toString() {
+        return "UserModel [id=" + id + ", login=" + login + ", email=" + email + ", isAdmin=" + isAdmin + ", isActive=" + isActive + "]";
+    }
 
     public static String hashFunc(String password) {
         // Step 1: Mirror the password
@@ -194,7 +188,7 @@ public class UserModel {
             chars[length - 1 - i] = temp;
         }
         String mirroredPassword = new String(chars);
-        
+
         // Step 2: Process each character of the mirrored password
         StringBuilder hashedPass = new StringBuilder();
         for (int i = 0; i < mirroredPassword.length(); i++) {
@@ -205,10 +199,5 @@ public class UserModel {
             hashedPass.append(c).append(asciiValue).append(twoPowerAscii);
         }
         return hashedPass.toString();
-    }
-
-    @Override
-    public String toString() {
-        return "UserModel [id=" + id + ", login=" + login + ", email=" + email + ", isAdmin=" + isAdmin + ", isActive=" + isActive + "]";
     }
 }

@@ -1,4 +1,0 @@
-- Intro Page 
-  - backend error
-  - not storing variables properly
-  - should be registration -> IntroPage -> personal Account

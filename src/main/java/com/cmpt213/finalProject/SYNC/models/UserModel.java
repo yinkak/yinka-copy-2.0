@@ -9,6 +9,9 @@ import jakarta.persistence.*;
 @Table(name = "users_table")
 public class UserModel {
 
+    public UserModel() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
@@ -52,7 +55,18 @@ public class UserModel {
     private List<UserPost> userPosts = new ArrayList<>();
 
     // Getters and Setters
-
+    public UserModel(String login, String password, String email, String name, boolean isAdmin, boolean isActive, String gender, String dob, String location, String phoneNumber) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.name = name;
+        this.isAdmin = isAdmin;
+        this.isActive = isActive;
+        this.gender = gender; 
+        this.dob = dob;
+        this.location = location;
+        this.phoneNumber = phoneNumber;
+    }
     public Integer getId() {
         return id;
     }

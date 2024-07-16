@@ -396,4 +396,13 @@ public class UsersController {
         sessionUser = userService.findByIdWithFriendRequests(sessionUser.getId().longValue());
         return userService.findGotFriendRequests(sessionUser);
     }
+    @GetMapping("/users/view")
+    public String getAllUsers(Model model){
+        System.out.println("Getting all users");
+        
+        List<UserModel> users = userRepository.findAll();
+        // end of database call
+        model.addAttribute("us", users);
+        return "showAll";
+    }
 }

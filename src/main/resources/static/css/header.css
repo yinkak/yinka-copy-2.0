@@ -1,38 +1,45 @@
-.navbar.navbar-expand-lg.navbar-dark.bg-dark {
-    background-color: #9370DB; /* Purple background */
+.navbar.navbar-expand-lg.navbar-light.bg-light {
+    background-color: #f8f8ff !important; /* Off-white background */
     padding: 12px 24px;
 }
 
-.navbar.navbar-expand-lg.navbar-dark.bg-dark .navbar-brand img {
-    height: 80px;
+.navbar.navbar-expand-lg.navbar-light.bg-light .navbar-brand img {
+    height: 100px; /* Adjusted height */
     width: auto;
     padding: 0;
     margin: 0;
+    transition: transform 0.3s ease; /* Smooth transition for logo enlargement */
 }
 
-.navbar.navbar-expand-lg.navbar-dark.bg-dark .navbar-nav .nav-link {
-    color: #FFFFFF; /* White text */
+.navbar.navbar-expand-lg.navbar-light.bg-light .navbar-brand img:hover {
+    transform: scale(1.1); /* Enlarge by 10% on hover */
+}
+
+.navbar.navbar-expand-lg.navbar-light.bg-light .navbar-nav .nav-link {
+    color: #b57edc; /* Purple text */
     font-size: 18px;
     padding: 10px 20px;
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 
-.navbar.navbar-expand-lg.navbar-dark.bg-dark .navbar-nav .nav-link:hover {
-    color: #9370DB; /* Purple text on hover */
-    background-color: #FFFFFF; /* White background on hover */
+.navbar.navbar-expand-lg.navbar-light.bg-light .navbar-nav .nav-link:hover {
+    color: #FFFFFF; /* White text on hover */
+    background-color: #b57edc; /* Purple background on hover */
     border-radius: 5px;
+    transform: scale(1.1); /* Enlarge by 10% on hover */
 }
 
-.navbar.navbar-expand-lg.navbar-dark.bg-dark .btn {
-    background-color: #9370DB; /* Purple background for buttons */
+.navbar.navbar-expand-lg.navbar-light.bg-light .btn {
+    background-color: #b57edc; /* Purple background for buttons */
     color: #FFFFFF; /* White text for buttons */
     border: none;
-    padding: 10px 20px;
+    padding: 50px 20px;
     margin-left: 10px; /* Adjust margin as needed */
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
-.navbar.navbar-expand-lg.navbar-dark.bg-dark .btn:hover {
+.navbar.navbar-expand-lg.navbar-light.bg-light .btn:hover {
     background-color: #f8f8ff; /* Off-white background on hover */
-    color: #9370DB; /* Purple text on hover */
+    color: #b57edc; /* Purple text on hover */
+    transform: scale(1.1); /* Enlarge by 10% on hover */
 }

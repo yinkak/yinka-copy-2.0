@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cmpt213.finalProject.SYNC.models.*;
 import com.cmpt213.finalProject.SYNC.repository.UserRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -23,6 +24,9 @@ public class UsersServiceImpl implements UsersService {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private ImgurService imgurService;
 
     @Override
     public UserModel registerUser(String login, String password, String email, String name, String gender, String dob,
@@ -96,6 +100,44 @@ public class UsersServiceImpl implements UsersService {
             return user;
         }
         return null; // Handle case where user is not found
+    }
+
+       public UserModel updateUser(String login, String dob, String gender, String phoneNumber, String location) {
+        Optional<UserModel> optionalUser = userRepository.findByLogin(login);
+
+        System.out.println(login);
+    
+        if (optionalUser.isPresent()) {
+            UserModel user = optionalUser.get();
+            // Update the user fields
+            user.setDob(dob);
+            user.setGender(gender);
+            user.setPhoneNumber(phoneNumber);
+            user.setLocation(location);
+
+            // Save the updated user back to the repository
+            userRepository.save(user);
+            return user;
+        }
+        return null; // Handle case where user is not found
+    }
+
+    public String updateProfilePicture(String login, MultipartFile image) {
+        UserModel user = userRepository.findByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
+        String ppURL= imgurService.uploadImage(image);
+        if (user != null) {
+            // Update the user's profile picture URL
+            user.setProfilePictureURL(ppURL);
+
+            // Save the updated user back to the database
+            userRepository.save(user);
+        }
+
+        return ppURL;
+    }
+
+    public void saveUser(UserModel user) {
+        userRepository.save(user);
     }
 
     public void deleteUserById(Integer userId) {

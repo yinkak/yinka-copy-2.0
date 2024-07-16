@@ -38,6 +38,9 @@ public class UsersController {
     @Autowired
     private PostService postService;
 
+     @Autowired
+    private ImgurService imgurService;
+
     @GetMapping("/")
     public String getHomePage() {
         return "index";
@@ -250,7 +253,7 @@ public class UsersController {
 
 
     @PostMapping("/editUser")
-    public String editUser(@ModelAttribute UserModel userModel, Model model, HttpSession session) {
+    public String editUser(@ModelAttribute UserModel userModel, Model model, HttpSession session ,@RequestParam("profilePictureFile") MultipartFile profilePictureFile, @RequestParam("resetProfilePicture") boolean resetProfilePicture) throws IOException {
         UserModel sessionUser = (UserModel) session.getAttribute("session_user");
 
         if (sessionUser == null) {
@@ -266,6 +269,19 @@ public class UsersController {
             return "editUser";
         }
 
+        if (resetProfilePicture) {
+            String defaultProfilePictureURL = "/logo/profile logo.png"; // Default profile picture path
+            updatedUser.setProfilePictureURL(defaultProfilePictureURL);
+            userService.saveUser(updatedUser);
+        }
+        
+        else{
+        if (profilePictureFile != null && !profilePictureFile.isEmpty()) {
+            String profilePictureURL = userService.updateProfilePicture(updatedUser.getLogin(), profilePictureFile);
+            updatedUser.setProfilePictureURL(profilePictureURL);
+            }
+        }
+
         session.setAttribute("session_user", updatedUser);
 
         model.addAttribute("userLogin", updatedUser.getLogin());
@@ -274,8 +290,8 @@ public class UsersController {
         return "viewProfile";
     }
 
-    @PostMapping("/intro")
-    public String getAdditionalInfo(@ModelAttribute UserModel userModel, Model model, HttpSession session) {
+     @PostMapping("/intro")
+    public String getAdditionalInfo(@ModelAttribute UserModel userModel, Model model, HttpSession session, @RequestParam("profilePictureFile") MultipartFile profilePictureFile) throws IOException {
         UserModel sessionUser = (UserModel) session.getAttribute("session_user");
 
         if (sessionUser == null) {
@@ -290,6 +306,8 @@ public class UsersController {
             model.addAttribute("error", "Failed to update user information.");
             return "introPage";
         }
+
+        userRepository.save(updatedUser);
 
         session.setAttribute("session_user", updatedUser);
 

@@ -136,7 +136,7 @@
                     <p>We are so glad you decided to join the Sync Family</p>
                     <p>Before we begin please enter some more information about yourself to show others!</p>
                     <p>Remeber this is for you and your friends and please share what you are comfortable with!</p>
-                    <form id="registration-form" action="/intro" method="post" th:object="${user}">
+                    <form id="registration-form" action="/intro" method="post" th:object="${user}" enctype="multipart/form-data">
                         <div class="mb-3">
                             <input type="date" class="form-control" id="dob" name="dob" placeholder="Date of Birth">
                         </div>

@@ -315,6 +315,13 @@ public class UsersController {
             return "introPage";
         }
 
+        if(profilePictureFile.isEmpty())
+        {
+            String defaultProfilePictureURL = "/logo/profile logo.png"; // Default profile picture path
+            updatedUser.setProfilePictureURL(defaultProfilePictureURL);
+            userService.saveUser(updatedUser);
+        }
+
         if (profilePictureFile != null && !profilePictureFile.isEmpty()) {
             String profilePictureURL = userService.updateProfilePicture(updatedUser.getLogin(), profilePictureFile);
             updatedUser.setProfilePictureURL(profilePictureURL);

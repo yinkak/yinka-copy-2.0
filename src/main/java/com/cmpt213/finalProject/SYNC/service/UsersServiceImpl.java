@@ -62,12 +62,6 @@ public class UsersServiceImpl implements UsersService {
         }
     }
 
-    //TODO: delete;
-    public void multipartFileToFile(MultipartFile multipart, Path dir) throws IOException {
-        Path filepath = Paths.get(dir.toString(), multipart.getOriginalFilename());
-        multipart.transferTo(filepath);
-        }
-
     @Override
     public UserModel authentication(String login, String password) {
         return userRepository.findByLoginAndPassword(login, password).orElse(null);

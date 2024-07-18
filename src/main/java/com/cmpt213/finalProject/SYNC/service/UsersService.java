@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public interface UsersService {
-    UserModel registerUser(String login, String password, String email, String name ,String gender, String dob, String location, String phoneNumber);
+    UserModel registerUser(String login, String password, String email, String name ,String gender, String dob, String location, String phoneNumber, String profilePictureURL);
     UserModel authentication(String login, String password);
     List<UserModel> getAllUsers();
     void deactivateUser(Integer id);
